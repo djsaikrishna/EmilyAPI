@@ -1,0 +1,15 @@
+services:
+  emily-api:
+    public: true
+    build: .
+    environment:
+      NODE_ENV: production
+    ports:
+      - 8080
+    resources:
+      requests:
+        cpu: 500m
+        memory: 1000Mi
+      limits:
+        cpu: 1000m
+        memory: 2000Mi

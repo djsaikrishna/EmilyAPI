@@ -1,0 +1,10 @@
+__pycache__/*
+web/__pycache__/*
+web/scripts/__pycache__/*
+web/scripts/telegraph/__pycache__/*
+.vscode
+.vscode/*
+.idea
+.idea/*
+venv/*
+log.txt

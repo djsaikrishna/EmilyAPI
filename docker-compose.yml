@@ -1,0 +1,9 @@
+version: "3.9"
+
+services:
+  bypassapi:
+    image: ghcr.io/missemily2022/emily_api:main
+    container_name: bypassapi
+    ports:
+      - 8080:8080
+    restart: unless-stopped
