@@ -507,7 +507,7 @@ def htpmovies_scrape(url):
     for a in soup.find_all("a"):
         c = a.get("href")
         if "/exit.php?url=" in c:
-            temp_u = f"https://{dom}{c}"
+            temp_u = f"https://{dom}" + c
             byp = htpmovies(temp_u)
             rslt += f"• <code>{byp}</code><br>"
     rslt += "<br><b><u>Telegram Links :</u></b><br>"
@@ -515,7 +515,7 @@ def htpmovies_scrape(url):
         d = b.get("href")
         if "telegram.me/htpfilesbot" in d:
             rslt += f"• <code>{d}</code><br>"
-    rslt += "<br><br><b><u>NOTE:</u></b><i>The GDrive Links are actually GPLinks/GyaniLinks AdLinks. Bypass them manually</i>"
+    rslt += "<br><br><b><u>NOTE:</u></b><i>The GDrive Links are actually GyaniLinks AdLinks. Bypass them manually</i>"
     tlg_url = telegraph_paste(rslt)
     return tlg_url
 
