@@ -230,9 +230,7 @@ def olamovies_scrape(url):
         try_url = f"https://{dom}/download/&key={key}&id={id}"
         LOGGER.info(f"Trying OlaMovies Scraping with Link : {try_url}!")
         while "rocklinks." not in soup and "try2link." not in soup:
-            res = client.get(
-                f"https://{dom}/download/", params=params, headers=h
-            )
+            res = client.get(f"https://{dom}/download/", params=params, headers=h)
             soup = BeautifulSoup(res.text, "html.parser")
             soup = soup.findAll("a")[0].get("href")
             if soup != "":
@@ -471,12 +469,12 @@ def cinevood_scrape(url):
     soup = BeautifulSoup(p.text, "html.parser")
     for a in soup.find_all("div", {"class": "cat-b"}):
         for b in a.find_all("a"):
-            t_urls.append(b['href'])
+            t_urls.append(b["href"])
     for c in t_urls:
         res = client.get(c)
         soup = BeautifulSoup(res.content, "html.parser")
         title = soup.title.string
-        text = re.sub(r'Kolop \| ', '', title)
+        text = re.sub(r"Kolop \| ", "", title)
         if text is not None:
             rslt += f"• {text} <code>{b['href']}</code><br>"
         else:
@@ -527,8 +525,8 @@ def htpmovies_scrape(url):
             li = []
             for item in ss:
                 li.append(item.string)
-            try: 
-                text = re.sub(r'www\S+ \- ', '', li[0])
+            try:
+                text = re.sub(r"www\S+ \- ", "", li[0])
             except IndexError:
                 time.sleep(2)
                 p = client(byp)
@@ -537,7 +535,7 @@ def htpmovies_scrape(url):
                 li = []
                 for item in ss:
                     li.append(item.string)
-                text = re.sub(r'www\S+ \- ', '', li[0])
+                text = re.sub(r"www\S+ \- ", "", li[0])
             if text is not None:
                 rslt += f"• {text} <code>{byp}</code><br>"
             else:
@@ -570,11 +568,7 @@ def sharespark_scrape(url):
                 star = re.sub(r"(?m)^\*.*", " ", result)
                 extra = re.sub(r"(?m)^\(https://e.*", " ", star)
                 rslt += (
-                    ",".join(
-                        re.findall(
-                            r"(?m)^.*https://new1.gdtot.*", next_s
-                        )
-                    )
+                    ",".join(re.findall(r"(?m)^.*https://new1.gdtot.*", next_s))
                     + "<br>"
                 )
                 rslt += (
@@ -605,7 +599,7 @@ def privatemoviez_scrape(url):
             d = a.get("href")
             f_url = privatemoviez(d)
             rslt += f"• {f_url}<br>"
-        except:
+        except BaseException:
             continue
     for b in soup.find_all(
         "a",
@@ -617,19 +611,17 @@ def privatemoviez_scrape(url):
             e = b.get("href")
             f_url = privatemoviez(e)
             rslt += f"• {f_url}<br>"
-        except:
+        except BaseException:
             continue
     for c in soup.find_all(
         "a",
-        {
-            "class": "wp-block-button__link has-background"
-        },
+        {"class": "wp-block-button__link has-background"},
     ):
         try:
             f = c.get("href")
             f_url = privatemoviez(f)
             rslt += f"• {f_url}<br>"
-        except:
+        except BaseException:
             continue
     rslt += "<br><br><b><u>NOTE:</u></b><i>The GDrive Links are actually GTLinks AdLinks. Bypass them manually</i>"
     tlg_url = telegraph_paste(rslt)

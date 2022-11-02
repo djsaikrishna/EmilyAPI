@@ -15,10 +15,9 @@ logging.getLogger("flask_restful").setLevel(logging.WARNING)
 
 from web.scripts.bypass import (adfly, adrinolinks, bifm, droplink, gplinks,
                                 gtlinks, gyanilinks, htpmovies, linkvertise,
-                                multi_aio, ouo, privatemoviez, rewayatcafe, 
-                                rocklinks, script_a, script_b, shareus,
-                                shorte, shortingly, sirigan, tnlink,
-                                xpshort)
+                                multi_aio, ouo, privatemoviez, rewayatcafe,
+                                rocklinks, script_a, script_b, shareus, shorte,
+                                shortingly, sirigan, tnlink, xpshort)
 from web.scripts.direct import (androiddatahost, anonfiles, antfiles,
                                 artstation, bunkr_cyber, fembed, filesIm,
                                 gdbot, github, gofile, hxfile, krakenfiles,

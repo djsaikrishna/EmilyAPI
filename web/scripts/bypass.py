@@ -134,7 +134,7 @@ def gtlinks(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
     a = requests.get(url, allow_redirects=True)
     b = a.url
-    b = b.replace("&m=1","")
+    b = b.replace("&m=1", "")
     dom = b.split("?")[0]
     code = url.split("/")[-1]
     final_url = f"{dom}/{code}"
@@ -174,7 +174,7 @@ def htpmovies(url):
     a = client.get(url, allow_redirects=True).text
     b = a.split('("')[-1]
     t_url = b.split('")')[0]
-    t_url = t_url.replace("&m=1","")
+    t_url = t_url.replace("&m=1", "")
     return t_url
 
 
@@ -253,7 +253,7 @@ def privatemoviez(url):
     test = soup.text
     param = test.split('console.log("')[-1]
     t_url = param.split('");')[0]
-    t_url = t_url.replace("&m=1","")
+    t_url = t_url.replace("&m=1", "")
     return t_url
 
 
