@@ -9,7 +9,7 @@ import requests
 from bs4 import BeautifulSoup, NavigableString, Tag
 
 from web import LOGGER
-from web.scripts.bypass import htpmovies, rocklinks
+from web.scripts.bypass import htpmovies, privatemoviez, rocklinks
 from web.scripts.pasting import telegraph_paste
 
 next_page = False
@@ -186,6 +186,8 @@ def filecrypt_scrape(url):
 
 
 def olamovies_scrape(url):
+    url = url + "/" if url[-1] != "/" else url
+    dom = url.split("/")[-3]
     res_mesg = f"<b>User URL :</b> <code>{url}</code><br>"
     res_mesg += f"<i>Direct Download Links:</i><br>"
     h = {
@@ -193,7 +195,7 @@ def olamovies_scrape(url):
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
         "Accept-Language": "en-US,en;q=0.5",
         "Referer": url,
-        "Alt-Used": "olamovies.wtf",
+        "Alt-Used": f"{dom}",
         "Connection": "keep-alive",
         "Upgrade-Insecure-Requests": "1",
         "Sec-Fetch-Dest": "document",
@@ -225,11 +227,11 @@ def olamovies_scrape(url):
         count = 3
         params = {"key": key, "id": id}
         soup = "None"
-        try_url = f"https://olamovies.wtf/download/&key={key}&id={id}"
+        try_url = f"https://{dom}/download/&key={key}&id={id}"
         LOGGER.info(f"Trying OlaMovies Scraping with Link : {try_url}!")
         while "rocklinks." not in soup and "try2link." not in soup:
             res = client.get(
-                "https://olamovies.wtf/download/", params=params, headers=h
+                f"https://{dom}/download/", params=params, headers=h
             )
             soup = BeautifulSoup(res.text, "html.parser")
             soup = soup.findAll("a")[0].get("href")
@@ -460,6 +462,7 @@ def moviesdrama_scrape(url):
 
 
 def cinevood_scrape(url):
+    t_urls = []
     client = requests.Session()
     rslt = f"<b>User URL :</b> <code>{url}</code><br>"
     rslt += f"<i>GDrive Links:</i><br>"
@@ -468,6 +471,15 @@ def cinevood_scrape(url):
     soup = BeautifulSoup(p.text, "html.parser")
     for a in soup.find_all("div", {"class": "cat-b"}):
         for b in a.find_all("a"):
+            t_urls.append(b['href'])
+    for c in t_urls:
+        res = client.get(c)
+        soup = BeautifulSoup(res.content, "html.parser")
+        title = soup.title.string
+        text = re.sub(r'Kolop \| ', '', title)
+        if text is not None:
+            rslt += f"• {text} <code>{b['href']}</code><br>"
+        else:
             rslt += f"• <code>{b['href']}</code><br>"
     tlg_url = telegraph_paste(rslt)
     return tlg_url
@@ -509,13 +521,33 @@ def htpmovies_scrape(url):
         if "/exit.php?url=" in c:
             temp_u = f"https://{dom}" + c
             byp = htpmovies(temp_u)
-            rslt += f"• <code>{byp}</code><br>"
+            p = client(byp)
+            soup = BeautifulSoup(p.content, "html.parser")
+            ss = soup.select("li.list-group-item")
+            li = []
+            for item in ss:
+                li.append(item.string)
+            try: 
+                text = re.sub(r'www\S+ \- ', '', li[0])
+            except IndexError:
+                time.sleep(2)
+                p = client(byp)
+                soup = BeautifulSoup(p.content, "html.parser")
+                ss = soup.select("li.list-group-item")
+                li = []
+                for item in ss:
+                    li.append(item.string)
+                text = re.sub(r'www\S+ \- ', '', li[0])
+            if text is not None:
+                rslt += f"• {text} <code>{byp}</code><br>"
+            else:
+                rslt += f"• <code>{byp}</code><br>"
     rslt += "<br><b><u>Telegram Links :</u></b><br>"
     for b in soup.find_all("a"):
         d = b.get("href")
         if "telegram.me/htpfilesbot" in d:
             rslt += f"• <code>{d}</code><br>"
-    rslt += "<br><br><b><u>NOTE:</u></b><i>The GDrive Links are actually GyaniLinks AdLinks. Bypass them manually</i>"
+    rslt += "<br><br><b><u>NOTE:</u></b><i>The GDrive Links are actually GTLinks AdLinks. Bypass them manually</i>"
     tlg_url = telegraph_paste(rslt)
     return tlg_url
 
@@ -540,7 +572,7 @@ def sharespark_scrape(url):
                 rslt += (
                     ",".join(
                         re.findall(
-                            r"(?m)^.*https://new1.gdtot.cfd/file/[0-9][^.]*", next_s
+                            r"(?m)^.*https://new1.gdtot.*", next_s
                         )
                     )
                     + "<br>"
@@ -552,5 +584,53 @@ def sharespark_scrape(url):
                     + "<br>"
                 )
     rslt = rslt.strip()
+    tlg_url = telegraph_paste(rslt)
+    return tlg_url
+
+
+def privatemoviez_scrape(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    rslt = f"<b>User URL :</b> <code>{url}</code><br>"
+    rslt += "<b><u>Links :</u></b><br>"
+    url = url + "/" if url[-1] != "/" else url
+    r = client.get(url)
+    soup = BeautifulSoup(r.text, "html.parser")
+    for a in soup.find_all(
+        "a",
+        {
+            "class": "wp-block-button__link has-blush-bordeaux-gradient-background has-background"
+        },
+    ):
+        try:
+            d = a.get("href")
+            f_url = privatemoviez(d)
+            rslt += f"• {f_url}<br>"
+        except:
+            continue
+    for b in soup.find_all(
+        "a",
+        {
+            "class": "wp-block-button__link has-midnight-gradient-background has-background"
+        },
+    ):
+        try:
+            e = b.get("href")
+            f_url = privatemoviez(e)
+            rslt += f"• {f_url}<br>"
+        except:
+            continue
+    for c in soup.find_all(
+        "a",
+        {
+            "class": "wp-block-button__link has-background"
+        },
+    ):
+        try:
+            f = c.get("href")
+            f_url = privatemoviez(f)
+            rslt += f"• {f_url}<br>"
+        except:
+            continue
+    rslt += "<br><br><b><u>NOTE:</u></b><i>The GDrive Links are actually GTLinks AdLinks. Bypass them manually</i>"
     tlg_url = telegraph_paste(rslt)
     return tlg_url

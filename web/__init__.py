@@ -15,9 +15,10 @@ logging.getLogger("flask_restful").setLevel(logging.WARNING)
 
 from web.scripts.bypass import (adfly, adrinolinks, bifm, droplink, gplinks,
                                 gtlinks, gyanilinks, htpmovies, linkvertise,
-                                multi_aio, ouo, rewayatcafe, rocklinks,
-                                script_a, script_b, shareus, shorte,
-                                shortingly, sirigan, tnlink, xpshort)
+                                multi_aio, ouo, privatemoviez, rewayatcafe, 
+                                rocklinks, script_a, script_b, shareus,
+                                shorte, shortingly, sirigan, tnlink,
+                                xpshort)
 from web.scripts.direct import (androiddatahost, anonfiles, antfiles,
                                 artstation, bunkr_cyber, fembed, filesIm,
                                 gdbot, github, gofile, hxfile, krakenfiles,
@@ -39,8 +40,8 @@ from web.scripts.scraper import (atishmkv_scrape, cinevez_scrape,
                                  htpmovies_scrape, igggames_scrape,
                                  index_scrape, magnet_scrape,
                                  moviesdrama_scrape, olamovies_scrape,
-                                 psa_scrape, sharespark_scrape,
-                                 toonworld4all_scrape)
+                                 privatemoviez_scrape, psa_scrape,
+                                 sharespark_scrape, toonworld4all_scrape)
 from web.scripts.shorten import (bitly_shorten, clckru_shorten, clilp_shorten,
                                  dagd_shorten, isgd_shorten, osdb_shorten,
                                  tinyurl_shorten, ttm_shorten, vgd_shorten)
@@ -57,6 +58,7 @@ BYP_SUP_SITES = {
     "linkvertise": linkvertise,
     "multi_aio": multi_aio,
     "ouo": ouo,
+    "privatemoviez": privatemoviez,
     "rewayatcafe": rewayatcafe,
     "rocklinks": rocklinks,
     "script_a": script_a,
@@ -146,6 +148,7 @@ SCRAPE_SUP_SITES = {
     "cinevez_scrap": cinevez_scrape,
     "htpmovies_scrap": htpmovies_scrape,
     "sharespark_scrap": sharespark_scrape,
+    "privatemoviez_scrap": privatemoviez_scrape,
 }
 
 SHRT_SUP_SITES = {

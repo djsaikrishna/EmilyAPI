@@ -68,25 +68,27 @@ C. Docker Compose
 | S.No. | Bypasser        |     Type      |
 |-------|-----------------|---------------|
 | 1.    | AdFly           | `adfly`       |
-| 2.    | BIFM API        | `bifm`        |
-| 3.    | DropLink        | `droplink`    |
-| 4.    | GpLink          | `gplinks`     |
-| 5.    | GTLinks         | `gtlinks`     |
-| 6.    | GyaniLinks      | `gyanilinks`  |
-| 7.    | HTPMovies       | `htpmovies`   |
-| 8.    | Linkvertise     | `linkvertise` |
-| 9.    | Bypass.vip API  | `multi_aio`   |
-| 10.   | Ouo             | `ouo`         |
-| 11.   | RewayatCafe     | `rewayatcafe` |
-| 12.   | RockLinks       | `rocklinks`   |
-| 13.   | Script - A      | `script_a`    |
-| 14.   | Script - B      | `script_b`    |
-| 15.   | ShareUs         | `shareus`     |
-| 16.   | Shorte          | `shorte`      |
-| 17.   | Shortingly      | `shortingly`  |
-| 18.   | Sirigan         | `sirigan`     |
-| 19.   | TnLink          | `tnlink`      |
-| 20.   | Xpshort         | `xpshort`     |
+| 2.    | AdrinoLinks     | `adrinolinks` |
+| 3.    | BIFM API        | `bifm`        |
+| 4.    | DropLink        | `droplink`    |
+| 5.    | GpLink          | `gplinks`     |
+| 6.    | GTLinks         | `gtlinks`     |
+| 7.    | GyaniLinks      | `gyanilinks`  |
+| 8.    | HTPMovies       | `htpmovies`   |
+| 9.    | Linkvertise     | `linkvertise` |
+| 10.   | Bypass.vip API  | `multi_aio`   |
+| 11.   | Ouo             | `ouo`         |
+| 12.   | PrivateMoviez   |`privatemoviez`|
+| 13.   | RewayatCafe     | `rewayatcafe` |
+| 14.   | RockLinks       | `rocklinks`   |
+| 15.   | Script - A      | `script_a`    |
+| 16.   | Script - B      | `script_b`    |
+| 17.   | ShareUs         | `shareus`     |
+| 18.   | Shorte          | `shorte`      |
+| 19.   | Shortingly      | `shortingly`  |
+| 20.   | Sirigan         | `sirigan`     |
+| 21.   | TnLink          | `tnlink`      |
+| 22.   | Xpshort         | `xpshort`     |
 
 ## Available Direct-Link Generators
 
@@ -195,11 +197,12 @@ C. Docker Compose
 | 6.    | HTPMovies Scraper      | `htpmovies_scrap`    |
 | 7.    | IGG Games Scraper      | `igggames_scrape`    |
 | 8.    | Moviesdrama Scraper    | `moviesdrama_scrap`  |
-| 9.    | Sharespark Scraper     | `sharespark_scrap`   |
-| 10.   | Website Magnet Scraper | `magnet_scrap`       |
-| 11.   | OlaMovies Scraper      | `olamovies_scrap`    |
-| 12.   | Psa.pm Site Scraper    | `psa_scrap`          |
-| 13.   | Toonworld4all Scraper  | `toonworld4all_scrap`|
+| 9.    | Privatemoviez Scraper  |`privatemoviez_scrape`|
+| 10.   | Sharespark Scraper     | `sharespark_scrap`   |
+| 11.   | Website Magnet Scraper | `magnet_scrap`       |
+| 12.   | OlaMovies Scraper      | `olamovies_scrap`    |
+| 13.   | Psa.pm Site Scraper    | `psa_scrap`          |
+| 14.   | Toonworld4all Scraper  | `toonworld4all_scrap`|
 
 
 ## Sample Requests

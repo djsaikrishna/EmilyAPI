@@ -132,7 +132,10 @@ def gplinks(url):
 
 def gtlinks(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    dom = "https://go.kinemaster.cc"
+    a = requests.get(url, allow_redirects=True)
+    b = a.url
+    b = b.replace("&m=1","")
+    dom = b.split("?")[0]
     code = url.split("/")[-1]
     final_url = f"{dom}/{code}"
     resp = client.get(final_url)
@@ -168,9 +171,11 @@ def gyanilinks(url):
 
 def htpmovies(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
-    download = client.get(url, allow_redirects=False)
-    xurl = download.headers["location"]
-    return xurl
+    a = client.get(url, allow_redirects=True).text
+    b = a.split('("')[-1]
+    t_url = b.split('")')[0]
+    t_url = t_url.replace("&m=1","")
+    return t_url
 
 
 def linkvertise(url):
@@ -180,7 +185,15 @@ def linkvertise(url):
     }
     data = client.get(f"https://bypass.pm/bypass2?url={url}", headers=headers)
     query = data.json()
-    return query["destination"]
+    if query["success"] is True:
+        return query["destination"]
+    else:
+        data = {
+            "url": url,
+        }
+        r = requests.post("https://api.bypass.vip/", data=data)
+        time.sleep(1)
+        return r.json()["destination"]
 
 
 def multi_aio(url):
@@ -231,6 +244,17 @@ def ouo(url):
         res = client.post(next_url, data=data, headers=h, allow_redirects=False)
         next_url = f"{p.scheme}://{p.hostname}/xreallcygo/{id}"
     return res.headers.get("Location")
+
+
+def privatemoviez(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    r = client.get(url)
+    soup = BeautifulSoup(r.text, "html.parser")
+    test = soup.text
+    param = test.split('console.log("')[-1]
+    t_url = param.split('");')[0]
+    t_url = t_url.replace("&m=1","")
+    return t_url
 
 
 def rewayatcafe(url):
@@ -429,7 +453,7 @@ def tnlink(url):
 
 
 def xpshort(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
+    client = requests.Session()
     dom = "https://push.bdnewsx.com"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
