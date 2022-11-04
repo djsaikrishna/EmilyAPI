@@ -75,20 +75,21 @@ C. Docker Compose
 | 6.    | GTLinks         | `gtlinks`     |
 | 7.    | GyaniLinks      | `gyanilinks`  |
 | 8.    | HTPMovies       | `htpmovies`   |
-| 9.    | Linkvertise     | `linkvertise` |
-| 10.   | Bypass.vip API  | `multi_aio`   |
-| 11.   | Ouo             | `ouo`         |
-| 12.   | PrivateMoviez   |`privatemoviez`|
-| 13.   | RewayatCafe     | `rewayatcafe` |
-| 14.   | RockLinks       | `rocklinks`   |
-| 15.   | Script - A      | `script_a`    |
-| 16.   | Script - B      | `script_b`    |
-| 17.   | ShareUs         | `shareus`     |
-| 18.   | Shorte          | `shorte`      |
-| 19.   | Shortingly      | `shortingly`  |
-| 20.   | Sirigan         | `sirigan`     |
-| 21.   | TnLink          | `tnlink`      |
-| 22.   | Xpshort         | `xpshort`     |
+| 9.    | Hypershort      | `hypershort`  |
+| 10.   | Linkvertise     | `linkvertise` |
+| 11.   | Bypass.vip API  | `multi_aio`   |
+| 12.   | Ouo             | `ouo`         |
+| 13.   | PrivateMoviez   |`privatemoviez`|
+| 14.   | RewayatCafe     | `rewayatcafe` |
+| 15.   | RockLinks       | `rocklinks`   |
+| 16.   | Script - A      | `script_a`    |
+| 17.   | Script - B      | `script_b`    |
+| 18.   | ShareUs         | `shareus`     |
+| 19.   | Shorte          | `shorte`      |
+| 20.   | Shortingly      | `shortingly`  |
+| 21.   | Sirigan         | `sirigan`     |
+| 22.   | TnLink          | `tnlink`      |
+| 23.   | Xpshort         | `xpshort`     |
 
 ## Available Direct-Link Generators
 

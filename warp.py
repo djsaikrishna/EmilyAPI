@@ -53,6 +53,8 @@ def run():
 
 g = 0
 b = 0
+limit = 50
+
 while True:
     #os.system("cls" if os.name == "nt" else "clear")
     """animation = ["[■□□□□□□□□□] 10%","[■■□□□□□□□□] 20%", "[■■■□□□□□□□] 30%", "[■■■■□□□□□□] 40%", "[■■■■■□□□□□] 50%", "[■■■■■■□□□□] 60%", "[■■■■■■■□□□] 70%", "[■■■■■■■■□□] 80%", "[■■■■■■■■■□] 90%", "[■■■■■■■■■■] 100%"] 
@@ -64,15 +66,17 @@ while True:
     if result == 200:
         g += 1
         #LOGGER.info(f"\n[•] WARP+ ID: {referrer}")
-        LOGGER.info(f"[✓] Added: {g} GB")
-        LOGGER.info(f"[#] Total: {g} Good {b} Bad")
+        if g > limit:
+            LOGGER.info(f"[✓] Added: {g} GB")
+            LOGGER.info(f"[#] Total: {g} Good {b} Bad")
+            limit += 50
         for i in range(20,-1,-1):
             sys.stdout.write(f" Cooldown: {i} seconds")
             sys.stdout.flush()
             time.sleep(8)
     else:
         b += 1
-        LOGGER.info(f"[#] Total: {g} Good {b} Bad")
+        #LOGGER.info(f"[#] Total: {g} Good {b} Bad")
         for i in range(10,-1,-1):
             sys.stdout.write(f" Cooldown: {i} seconds")
             sys.stdout.flush()
