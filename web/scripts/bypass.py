@@ -132,20 +132,20 @@ def gplinks(url):
 
 def gtlinks(url):
     client = requests.Session()
-    url = url[:-1] if url[-1] == '/' else url
+    url = url[:-1] if url[-1] == "/" else url
     if "theforyou.in" in url:
         token = url.split("=")[-1]
     else:
         url = requests.get(url).url
         token = url.split("=")[-1]
     domain = "https://go.kinemaster.cc/"
-    response = client.get(domain+token, headers={"referer":domain+token})
+    response = client.get(domain + token, headers={"referer": domain + token})
     soup = BeautifulSoup(response.content, "html.parser")
     inputs = soup.find(id="go-link").find_all(name="input")
-    data = { input.get('name'): input.get('value') for input in inputs }
+    data = {input.get("name"): input.get("value") for input in inputs}
     time.sleep(5)
-    headers={"x-requested-with": "XMLHttpRequest"}
-    des_url = client.post(domain+"links/go", data=data, headers=headers).json()["url"]
+    headers = {"x-requested-with": "XMLHttpRequest"}
+    des_url = client.post(domain + "links/go", data=data, headers=headers).json()["url"]
     des_url = des_url.replace(" ", "%20")
     return des_url
 
@@ -179,38 +179,46 @@ def htpmovies(url):
     DOMAIN = "https://go.theforyou.in"
     final_url = f"{DOMAIN}/{param}"
     resp = client.get(final_url)
-    soup = BeautifulSoup(resp.content, "html.parser")    
+    soup = BeautifulSoup(resp.content, "html.parser")
     inputs = soup.find(id="go-link").find_all(name="input")
-    data = { input.get('name'): input.get('value') for input in inputs }
-    h = { "x-requested-with": "XMLHttpRequest" }
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
     time.sleep(10)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
-    return r.json()['url']
+    return r.json()["url"]
 
 
 def hypershort(url):
-	client = requests.Session()
-	response= client.get(url)
-	soup = BeautifulSoup(response.content, "html.parser")	
-	token_response = client.get("https://blog.miuiflash.com/links/createToken.js").text
-	token_regex = re.search("itsToken\.value = \S+", token_response)
-	token = token_regex[0].split("=")[1].removesuffix('"').removeprefix(' "')
-	inputs = soup.find(id="re-form").find_all(name="input")
-	data = { input.get('name'): input.get('value') for input in inputs }["getData"]
-	next_page_link = soup.find("form").get("action")
-	resp = client.post(next_page_link, data={"itsToken":token, "get2Data":data},
-	headers={"referer":next_page_link})
-	soup = BeautifulSoup(resp.content, "html.parser")	
-	data = { input.get('name'): input.get('value') for input in inputs }
-	time.sleep(3)
-	tokenize_url = soup.find(name="iframe", id="anonIt").get("src")
-	tokenize_url_resp = client.get(tokenize_url)
-	soup = BeautifulSoup(tokenize_url_resp.content, "html.parser")	
-	time.sleep(1)
-	inputs = soup.find(id="go-link").find_all(name="input")
-	data = { input.get('name'): input.get('value') for input in inputs }
-	final_response = client.post("https://blog.miuiflash.com/blog/links/go", data=data,cookies= tokenize_url_resp.cookies, headers={"x-requested-with": "XMLHttpRequest", "referer":tokenize_url}).json()["url"]
-	return final_response
+    client = requests.Session()
+    response = client.get(url)
+    soup = BeautifulSoup(response.content, "html.parser")
+    token_response = client.get("https://blog.miuiflash.com/links/createToken.js").text
+    token_regex = re.search("itsToken\.value = \S+", token_response)
+    token = token_regex[0].split("=")[1].removesuffix('"').removeprefix(' "')
+    inputs = soup.find(id="re-form").find_all(name="input")
+    data = {input.get("name"): input.get("value") for input in inputs}["getData"]
+    next_page_link = soup.find("form").get("action")
+    resp = client.post(
+        next_page_link,
+        data={"itsToken": token, "get2Data": data},
+        headers={"referer": next_page_link},
+    )
+    soup = BeautifulSoup(resp.content, "html.parser")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    time.sleep(3)
+    tokenize_url = soup.find(name="iframe", id="anonIt").get("src")
+    tokenize_url_resp = client.get(tokenize_url)
+    soup = BeautifulSoup(tokenize_url_resp.content, "html.parser")
+    time.sleep(1)
+    inputs = soup.find(id="go-link").find_all(name="input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    final_response = client.post(
+        "https://blog.miuiflash.com/blog/links/go",
+        data=data,
+        cookies=tokenize_url_resp.cookies,
+        headers={"x-requested-with": "XMLHttpRequest", "referer": tokenize_url},
+    ).json()["url"]
+    return final_response
 
 
 def linkvertise(url):
@@ -288,18 +296,18 @@ def privatemoviez(url):
     test = soup.text
     param = test.split('console.log("')[-1]
     t_url = param.split('");')[0]
-    t_url = t_url.replace("&m=1", "")     
-    param = t_url.split("/")[-1]     
+    t_url = t_url.replace("&m=1", "")
+    param = t_url.split("/")[-1]
     DOMAIN = "https://go.kinemaster.cc"
     final_url = f"{DOMAIN}/{param}"
     resp = client.get(final_url)
-    soup = BeautifulSoup(resp.content, "html.parser")    
+    soup = BeautifulSoup(resp.content, "html.parser")
     inputs = soup.find(id="go-link").find_all(name="input")
-    data = { input.get('name'): input.get('value') for input in inputs }
-    h = { "x-requested-with": "XMLHttpRequest" }
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
     time.sleep(10)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
-    return r.json()['url']
+    return r.json()["url"]
 
 
 def rewayatcafe(url):

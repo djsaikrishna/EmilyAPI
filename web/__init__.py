@@ -14,19 +14,20 @@ logging.getLogger("flask_restful").setLevel(logging.WARNING)
 
 
 from web.scripts.bypass import (adfly, adrinolinks, bifm, droplink, gplinks,
-                                gtlinks, gyanilinks, htpmovies, linkvertise,
-                                multi_aio, ouo, privatemoviez, rewayatcafe,
-                                rocklinks, script_a, script_b, shareus, shorte,
-                                shortingly, sirigan, tnlink, xpshort, hypershort)
+                                gtlinks, gyanilinks, htpmovies, hypershort,
+                                linkvertise, multi_aio, ouo, privatemoviez,
+                                rewayatcafe, rocklinks, script_a, script_b,
+                                shareus, shorte, shortingly, sirigan, tnlink,
+                                xpshort)
 from web.scripts.direct import (androiddatahost, anonfiles, antfiles,
                                 artstation, bunkr_cyber, fembed, filesIm,
                                 gdbot, github, gofile, hxfile, krakenfiles,
-                                letsupload, linkpoi, mdisk, mediafire, megaup,
-                                mirrored, osdn, pandafile, pixeldrain, pixl,
-                                reupload, sbembed, sendcm, sfile, solidfiles,
-                                sourceforge, streamlare, streamtape, uploadee,
-                                uservideo, wetransfer, yandex_disk, zippyshare
-                                mdisk_mpd)
+                                letsupload, linkpoi, mdisk, mdisk_mpd,
+                                mediafire, megaup, mirrored, osdn, pandafile,
+                                pixeldrain, pixl, reupload, sbembed, sendcm,
+                                sfile, solidfiles, sourceforge, streamlare,
+                                streamtape, uploadee, uservideo, wetransfer,
+                                yandex_disk, zippyshare)
 from web.scripts.misc import (dictionary_search, github_search, google_search,
                               image_search, lyrics_search, npm_search,
                               pypi_search, reddit_search, spellcheck,
