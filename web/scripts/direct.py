@@ -175,6 +175,21 @@ def mdisk(url):
     return dl_url
 
 
+def mdisk_mpd(url):
+    check = re.findall(r"\bhttps?://.*mdisk\S+", url)
+    link = check[0]
+    url = link.split("/")[-1]
+    scraper = cloudscraper.create_scraper(interpreter="nodejs", allow_brotli=False)
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.0.0 Safari/537.36"
+    }
+    api = f"https://diskuploader.entertainvideo.com/v1/file/cdnurl?param={url}"
+    response = scraper.get(api, headers=headers).json()
+    dl_url = response["source"]
+    dl_url = dl_url.replace(" ", "%20")
+    return dl_url
+
+
 def mediafire(url):
     page = BeautifulSoup(requests.get(url).content, "lxml")
     info = page.find("a", {"aria-label": "Download file"})

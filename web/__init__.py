@@ -25,7 +25,8 @@ from web.scripts.direct import (androiddatahost, anonfiles, antfiles,
                                 mirrored, osdn, pandafile, pixeldrain, pixl,
                                 reupload, sbembed, sendcm, sfile, solidfiles,
                                 sourceforge, streamlare, streamtape, uploadee,
-                                uservideo, wetransfer, yandex_disk, zippyshare)
+                                uservideo, wetransfer, yandex_disk, zippyshare
+                                mdisk_mpd)
 from web.scripts.misc import (dictionary_search, github_search, google_search,
                               image_search, lyrics_search, npm_search,
                               pypi_search, reddit_search, spellcheck,
@@ -85,6 +86,7 @@ DIRT_SUP_SITES = {
     "letsupload": letsupload,
     "linkpoi": linkpoi,
     "mdisk": mdisk,
+    "mdisk_mpd": mdisk_mpd,
     "mediafire": mediafire,
     "megaup": megaup,
     "mirrored": mirrored,

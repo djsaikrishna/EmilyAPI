@@ -132,6 +132,7 @@ C. Docker Compose
 | 34.   | Pixl            | `pixl`            |
 | 35.   | SendCM          | `sendcm`          |
 | 36.   | GDBot           | `gdbot`           |
+| 37.   | MDisk MPD       | `mdisk_mpd`       |
 
 ## Available Misc Services
 

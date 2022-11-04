@@ -131,21 +131,21 @@ def gplinks(url):
 
 
 def gtlinks(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
-    a = requests.get(url, allow_redirects=True)
-    b = a.url
-    b = b.replace("&m=1", "")
-    dom = b.split("?")[0]
-    code = url.split("/")[-1]
-    final_url = f"{dom}/{code}"
-    resp = client.get(final_url)
-    soup = BeautifulSoup(resp.content, "html.parser")
-    inputs = soup.find(id="go-link").find_all(name="input")
-    data = {input.get("name"): input.get("value") for input in inputs}
-    h = {"x-requested-with": "XMLHttpRequest"}
-    time.sleep(5)
-    r = client.post(f"{dom}/links/go", data=data, headers=h)
-    des_url = r.json()["url"]
+    client = requests.Session()
+	url = url[:-1] if url[-1] == '/' else url
+	if "theforyou.in" in url:
+		token = url.split("=")[-1]
+	else:
+		url = requests.get(url).url
+		token = url.split("=")[-1]
+	domain = "https://go.kinemaster.cc/"
+	response = client.get(domain+token, headers={"referer":domain+token})
+	soup = BeautifulSoup(response.content, "html.parser")
+	inputs = soup.find(id="go-link").find_all(name="input")
+	data = { input.get('name'): input.get('value') for input in inputs }
+	time.sleep(5)
+	headers={"x-requested-with": "XMLHttpRequest"}
+	des_url = client.post(domain+"links/go", data=data, headers=headers).json()["url"]
     des_url = des_url.replace(" ", "%20")
     return des_url
 
@@ -175,7 +175,17 @@ def htpmovies(url):
     b = a.split('("')[-1]
     t_url = b.split('")')[0]
     t_url = t_url.replace("&m=1", "")
-    return t_url
+    param = t_url.split("/")[-1]
+    DOMAIN = "https://go.theforyou.in"
+    final_url = f"{DOMAIN}/{param}"
+    resp = client.get(final_url)
+    soup = BeautifulSoup(resp.content, "html.parser")    
+    inputs = soup.find(id="go-link").find_all(name="input")
+    data = { input.get('name'): input.get('value') for input in inputs }
+    h = { "x-requested-with": "XMLHttpRequest" }
+    time.sleep(10)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    return r.json()['url']
 
 
 def linkvertise(url):
@@ -253,8 +263,18 @@ def privatemoviez(url):
     test = soup.text
     param = test.split('console.log("')[-1]
     t_url = param.split('");')[0]
-    t_url = t_url.replace("&m=1", "")
-    return t_url
+    t_url = t_url.replace("&m=1", "")     
+    param = t_url.split("/")[-1]     
+    DOMAIN = "https://go.kinemaster.cc"
+    final_url = f"{DOMAIN}/{param}"
+    resp = client.get(final_url)
+    soup = BeautifulSoup(resp.content, "html.parser")    
+    inputs = soup.find(id="go-link").find_all(name="input")
+    data = { input.get('name'): input.get('value') for input in inputs }
+    h = { "x-requested-with": "XMLHttpRequest" }
+    time.sleep(10)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    return r.json()['url']
 
 
 def rewayatcafe(url):
