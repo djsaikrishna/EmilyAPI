@@ -8,8 +8,6 @@ import cloudscraper
 import requests
 from bs4 import BeautifulSoup
 
-from web.helpers.regex import *
-
 BIFM_URL = os.environ.get("BIFM_URL", "https://bifm.tacohitbox.com/api/bypass?url")
 
 
@@ -313,19 +311,23 @@ def privatemoviez(url):
 
 
 def pkin(url):
-    url = url[:-1] if url[-1] == '/' else url
+    url = url[:-1] if url[-1] == "/" else url
     domain = "https://go.paisakamalo.in/"
     referer = "https://techkeshri.com/"
     token = url.split("/")[-1]
     user_agent = "Mozilla/5.0 (Linux; Android 11; 2201116PI) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Mobile Safari/537.36"
     client = requests.Session()
-    response = client.get(domain + token, headers={"referer": referer, "user-agent": user_agent})
+    response = client.get(
+        domain + token, headers={"referer": referer, "user-agent": user_agent}
+    )
     soup = BeautifulSoup(response.content, "html.parser")
     inputs = soup.find(id="go-link").find_all(name="input")
-    data = {input.get('name'): input.get('value') for input in inputs}
+    data = {input.get("name"): input.get("value") for input in inputs}
     time.sleep(3)
     headers = {"x-requested-with": "XMLHttpRequest", "user-agent": user_agent}
-    bypassed_url = client.post(domain + "links/go", data=data, headers=headers).json()["url"]
+    bypassed_url = client.post(domain + "links/go", data=data, headers=headers).json()[
+        "url"
+    ]
     return bypassed_url
 
 
@@ -488,11 +490,14 @@ def shortingly(url):
 
 
 def shortly(url):
-    url = url[:-1] if url[-1] == '/' else url
+    url = url[:-1] if url[-1] == "/" else url
     token = url.split("/")[-1]
     shortly_bypass_api = "https://www.shortly.xyz/getlink.php/"
-    response = requests.post(shortly_bypass_api, data={"id": token},
-                             headers={"referer": "https://www.shortly.xyz/link"}).text
+    response = requests.post(
+        shortly_bypass_api,
+        data={"id": token},
+        headers={"referer": "https://www.shortly.xyz/link"},
+    ).text
     return response
 
 

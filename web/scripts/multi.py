@@ -1,10 +1,10 @@
+import PyBypass
+
+from web.helpers.lists import *
+from web.helpers.regex import *
 from web.scripts.bypass import *
 from web.scripts.direct import *
 from web.scripts.scraper import *
-from web.helpers.lists import *
-from web.helpers.regex import *
-
-import PyBypass
 
 
 def all_in_one(url):
@@ -56,7 +56,7 @@ def all_in_one(url):
         res = artstation(url)
     elif "mdisk." in url:
         res = mdisk(url)
-        res2 = mdisk_mpd(url)
+        mdisk_mpd(url)
     elif "wetransfer." in url or "we.tl" in url:
         res = wetransfer(url)
     elif "gdbot." in url:
@@ -135,14 +135,14 @@ def all_in_one(url):
     elif "userscloud." in url:
         res = userscloud(url)
     elif (
-            "workers.dev" in url
-            or "0:/" in url
-            or "1:/" in url
-            or "2:/" in url
-            or "3:/" in url
-            or "4:/" in url
-            or "5:/" in url
-            or "6:/" in url
+        "workers.dev" in url
+        or "0:/" in url
+        or "1:/" in url
+        or "2:/" in url
+        or "3:/" in url
+        or "4:/" in url
+        or "5:/" in url
+        or "6:/" in url
     ):
         res = index_scrape(url)
     elif "atishmkv." in url or "atish.mkv" in url:
