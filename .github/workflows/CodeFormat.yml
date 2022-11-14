@@ -24,9 +24,9 @@ jobs:
       - name: Lint with Isort and Black
         run: |
           isort web/scripts/ web/__init__.py web/__main__.py
-          black web/scripts/
+          black web/helpers/ web/scripts/
       - name: Push Changes to Branch
-        uses: stefanzweifel/git-auto-commit-action@v4.15.3
+        uses: stefanzweifel/git-auto-commit-action@v4.15.4
         with:
           commit_message: "Auto: Code Formatted"
           commit_options: "--no-verify"

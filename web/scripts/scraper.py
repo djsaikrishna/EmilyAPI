@@ -4,7 +4,6 @@ import time
 import urllib.parse
 from base64 import b64decode
 
-import cloudscraper
 import requests
 from bs4 import BeautifulSoup, NavigableString, Tag
 
@@ -20,7 +19,7 @@ def index_scrap(payload, url):
     global next_page
     global next_page_token
     url = url + "/" if url[-1] != "/" else url
-    client = cloudscraper.create_scraper(allow_brotli=False)
+    client = requests.Session()
     resp = client.post(url, data=payload)
     if resp.status_code == 401:
         return "Could not Acess your Entered URL!"
@@ -66,7 +65,7 @@ def index_scrape(url):
 
 
 def try2link_bypass(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
+    client = requests.Session()
     url = url[:-1] if url[-1] == "/" else url
     params = (("d", int(time.time()) + (60 * 4)),)
     r = client.get(url, params=params, headers={"Referer": "https://newforex.online/"})
@@ -87,7 +86,7 @@ def try2link_bypass(url):
 
 
 def try2link_scrape(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
+    client = requests.Session()
     h = {
         "upgrade-insecure-requests": "1",
         "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36",
@@ -100,7 +99,7 @@ def try2link_scrape(url):
 
 def psa_scrape(url):
     rs_msg = f"<b>User URL :</b> <code>{url}</code><br><br>"
-    client = cloudscraper.create_scraper(allow_brotli=False)
+    client = requests.Session()
     url = url + "/" if url[-1] != "/" else url
     r = client.get(url)
     soup = BeautifulSoup(r.text, "html.parser").find_all(
@@ -119,7 +118,7 @@ def psa_scrape(url):
 
 def filecrypt_scrape(url):
     res_msg = f"<b>User URL :</b> <code>{url}</code><br><br>"
-    client = cloudscraper.create_scraper(allow_brotli=False)
+    client = requests.Session()
     h1 = {
         "authority": "filecrypt.co",
         "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -203,7 +202,7 @@ def olamovies_scrape(url):
         "Sec-Fetch-Site": "same-origin",
         "Sec-Fetch-User": "?1",
     }
-    client = cloudscraper.create_scraper(allow_brotli=False)
+    client = requests.Session()
     url = url + "/" if url[-1] != "/" else url
     res = client.get(url)
     soup = BeautifulSoup(res.text, "html.parser")
@@ -388,7 +387,7 @@ def toonworld4all_scrape(url):
 
 
 def atishmkv_scrape(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
+    client = requests.Session()
     rslt = f"<b>User URL :</b> <code>{url}</code><br>"
     rslt += f"<i>GDrive Links:</i><br>"
     url = url + "/" if url[-1] != "/" else url
@@ -440,7 +439,7 @@ def atishmkv_scrape(url):
 
 
 def moviesdrama_scrape(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
+    client = requests.Session()
     rslt = f"<b>User URL :</b> <code>{url}</code><br>"
     rslt += f"<i>GDrive Links:</i><br>"
     url = url + "/" if url[-1] != "/" else url
@@ -507,7 +506,7 @@ def cinevez_scrape(url):
 
 
 def htpmovies_scrape(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
+    client = requests.Session()
     rslt = f"<b>User URL :</b> <code>{url}</code><br><br>"
     url = url + "/" if url[-1] != "/" else url
     dom = url.split("/")[-3]
@@ -519,7 +518,7 @@ def htpmovies_scrape(url):
         if "/exit.php?url=" in c:
             temp_u = f"https://{dom}" + c
             byp = htpmovies(temp_u)
-            p = client(byp)
+            p = client.get(byp)
             soup = BeautifulSoup(p.content, "html.parser")
             ss = soup.select("li.list-group-item")
             li = []
@@ -529,7 +528,7 @@ def htpmovies_scrape(url):
                 text = re.sub(r"www\S+ \- ", "", li[0])
             except IndexError:
                 time.sleep(2)
-                p = client(byp)
+                p = client.get(byp)
                 soup = BeautifulSoup(p.content, "html.parser")
                 ss = soup.select("li.list-group-item")
                 li = []
@@ -552,7 +551,7 @@ def htpmovies_scrape(url):
 
 def sharespark_scrape(url):
     rslt = f"<b>User URL :</b> <code>{url}</code><br><br>"
-    client = cloudscraper.create_scraper(allow_brotli=False)
+    client = requests.Session()
     url = "?action=printpage;".join(url.split("?"))
     res = client.get(url)
     soup = BeautifulSoup(res.text, "html.parser")
@@ -583,7 +582,7 @@ def sharespark_scrape(url):
 
 
 def privatemoviez_scrape(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
+    client = requests.Session()
     rslt = f"<b>User URL :</b> <code>{url}</code><br>"
     rslt += "<b><u>Links :</u></b><br>"
     url = url + "/" if url[-1] != "/" else url

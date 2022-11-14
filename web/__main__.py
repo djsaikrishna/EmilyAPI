@@ -8,6 +8,8 @@ from waitress import serve
 
 from web import (BYP_SUP_SITES, DIRT_SUP_SITES, MISC_SUP_SITES,
                  PASTE_SUP_SITES, SCRAPE_SUP_SITES, SHRT_SUP_SITES, abc, app)
+from web.helpers.regex import is_a_url
+from web.scripts.multi import all_in_one as MultiFunction
 
 logging.basicConfig(
     format="%(asctime)s - [%(filename)s:%(lineno)d] - %(levelname)s - %(message)s",
@@ -51,6 +53,10 @@ def json_api():
         return jsonify({"success": False, "msg": "Parameters Incorrect!"})
     byp_type = data["type"]
     usr_link = data["url"]
+    valid_url = is_a_url(usr_link)
+    if valid_url is not True:
+        LOGGER.error("API could not detect URL Input!")
+        return jsonify({"success": False, "msg": "API could not detect URL Input!"})
     LOGGER.info(f"Received URL - {byp_type} - {usr_link}")
     if byp_type not in BYP_SUP_SITES.keys():
         LOGGER.error("Site Not Supported!")
@@ -87,6 +93,10 @@ def json_api_2():
         return jsonify({"success": False, "msg": "Parameters Incorrect!"})
     dir_type = data["type"]
     usr_link = data["url"]
+    valid_url = is_a_url(usr_link)
+    if valid_url is not True:
+        LOGGER.error("API could not detect URL Input!")
+        return jsonify({"success": False, "msg": "API could not detect URL Input!"})
     LOGGER.info(f"Received URL - {dir_type} - {usr_link}")
     if dir_type not in DIRT_SUP_SITES.keys():
         LOGGER.error("Site Not Supported!")
@@ -133,6 +143,42 @@ def json_api_3():
         LOGGER.info(f"Successfully Performed Misc Service - {misc_type} - {result}")
         return jsonify(
             {"success": True, "url": result, "credits": "Made by Miss Emily", "type": misc_type}
+        )
+    except Exception as ex:
+        LOGGER.error(f"Failed to Perform Action due to : {ex}!")
+        return jsonify(
+            {"success": False, "msg": f"Failed to Perform Action due to : {ex}"}
+        )
+
+
+@app.route("/api/multi", methods=["GET", "POST"])
+def json_api_multi():
+    data = request.data.strip()
+    if len(data) == 0:
+        return jsonify({"success": False, "msg": "No Data Provided"})
+    try:
+        data = json.loads(data)
+    except json.JSONDecodeError as ex:
+        LOGGER.error(f"Could not parse the data as JSON: {ex}")
+        return jsonify(
+            {"success": False, "msg": f"Could not parse the data as JSON: {ex}"}
+        )
+    data_keys = data.keys()
+    if len(data_keys) != 1 or "url" not in data_keys:
+        LOGGER.error("Parameter Incorrect!")
+        return jsonify({"success": False, "msg": "Parameter Incorrect!"})
+    usr_link = data["url"]
+    valid_url = is_a_url(usr_link)
+    if valid_url is not True:
+        LOGGER.error("API could not detect URL Input!")
+        return jsonify({"success": False, "msg": "API could not detect URL Input!"})
+    LOGGER.info(f"Received URL - multi - {usr_link}")
+    dir_func = MultiFunction
+    try:
+        result = dir_func(usr_link)
+        LOGGER.info(f"Successfully Completed - multi - {result}")
+        return jsonify(
+            {"success": True, "url": result, "credits": "Made by Miss Emily", "type": "multi"}
         )
     except Exception as ex:
         LOGGER.error(f"Failed to Perform Action due to : {ex}!")
@@ -195,6 +241,10 @@ def json_api_5():
         return jsonify({"success": False, "msg": "Parameters Incorrect!"})
     scrap_type = data["type"]
     usr_link = data["url"]
+    valid_url = is_a_url(usr_link)
+    if valid_url is not True:
+        LOGGER.error("API could not detect URL Input!")
+        return jsonify({"success": False, "msg": "API could not detect URL Input!"})
     LOGGER.info(f"Received URL - {scrap_type} - {usr_link}")
     if scrap_type not in SCRAPE_SUP_SITES.keys():
         LOGGER.error("Site Not Supported!")
@@ -231,6 +281,10 @@ def json_api_6():
         return jsonify({"success": False, "msg": "Parameters Incorrect!"})
     shrtn_type = data["type"]
     usr_link = data["url"]
+    valid_url = is_a_url(usr_link)
+    if valid_url is not True:
+        LOGGER.error("API could not detect URL Input!")
+        return jsonify({"success": False, "msg": "API could not detect URL Input!"})
     LOGGER.info(f"Received URL - {shrtn_type} - {usr_link}")
     if shrtn_type not in SHRT_SUP_SITES.keys():
         LOGGER.error("Site Not Supported!")

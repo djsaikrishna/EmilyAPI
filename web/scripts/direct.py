@@ -1,13 +1,15 @@
 import json
-import re
 import time
 import urllib.parse
 
 import cloudscraper
+import random
 import requests
+import math
 from bs4 import BeautifulSoup
 from lk21 import Bypass
 
+from web.helpers.regex import *
 from web.scripts.pasting import telegraph_paste
 
 
@@ -52,11 +54,17 @@ def bunkr_cyber(url):
 
 
 def anonfiles(url):
-    return Bypass().bypass_anonfiles(url)
+    soup = BeautifulSoup(requests.get(url).content, "html.parser")
+    if (dlurl := soup.find(id="download-url")):
+        return dlurl["href"]
 
 
 def antfiles(url):
-    return Bypass().bypass_antfiles(url)
+    soup = BeautifulSoup(requests.get(url).content, "html.parser")
+    parsed_url = urllib.parse.urlparse(url)
+    if (a := soup.find(class_="main-btn", href=True)):
+        final_url = "{0.scheme}://{0.netloc}/{1}".format(parsed_url, a["href"])
+        return final_url
 
 
 def artstation(url):
@@ -73,11 +81,19 @@ def artstation(url):
     return dl_url
 
 
+def dropbox(url):
+    if "dropbox.com/s/" in url:
+        return url.replace("dropbox.com", "dl.dropboxusercontent.com")
+    else:
+        return url.replace("?dl=0", "?dl=1")
+
+
 def fembed(url):
-    dl_url = Bypass().bypass_fembed(url)
-    count = len(dl_url)
-    lst_link = [dl_url[i] for i in dl_url]
-    dl_url = lst_link[count - 1]
+    url = url[:-1] if url[-1] == '/' else url
+    TOKEN = url.split("/")[-1]
+    API = "https://fembed-hd.com/api/source/"
+    response = requests.post(API + TOKEN).json()
+    dl_url = response["data"]
     dl_url = dl_url.replace(" ", "%20")
     return dl_url
 
@@ -123,7 +139,27 @@ def gofile(url):
 
 
 def hxfile(url):
-    return Bypass().bypass_filesIm(url)
+    url = url[:-1] if url[-1] == '/' else url
+    token = url.split("/")[-1]
+    client = requests.Session()
+    headers = {
+        'content-type': 'application/x-www-form-urlencoded',
+        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36',
+    }
+    data = {
+        'op': 'download2',
+        'id': token,
+        'rand': '',
+        'referer': '',
+        'method_free': '',
+        'method_premium': '',
+    }
+    response = client.post(url, headers=headers, data=data)
+    soup = BeautifulSoup(response.text, "html.parser")
+    if (btn := soup.find(class_="btn btn-dow")):
+        return btn["href"]
+    if (unique := soup.find(id="uniqueExpirylink")):
+        return unique["href"]
 
 
 def krakenfiles(url):
@@ -220,6 +256,22 @@ def megaup(url):
 
 def mirrored(url):
     return Bypass().bypass_mirrored(url)
+
+
+def mp4upload(url):
+    url = url[:-1] if url[-1] == '/' else url
+    headers = {'referer': 'https://mp4upload.com'}
+    token = url.split("/")[-1]
+    data = {
+        'op': 'download2',
+        'id': token,
+        'rand': '', 'referer': 'https://www.mp4upload.com/',
+        'method_free': '', 'method_premium': ''
+    }
+
+    response = requests.post(url, headers=headers, data=data, allow_redirects=False)
+    des_url = response.headers["Location"]
+    return des_url
 
 
 def osdn(url):
@@ -434,34 +486,120 @@ def sourceforge(url):
         return f'https://{mirror["id"]}.dl.sourceforge.net/project/{project}/{file_path}?viasf=1'
 
 
+def streamsb(url):
+    def rand_str():
+        array = "abcdefghijklmnopqrstuvwqyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+        return "".join([random.choice(array) for _ in range(12)])
+
+    def hex_encode(string: str):
+        return (string).encode("utf-8").hex()
+
+    url = url[:-1] if url[-1] == '/' else url
+
+    if ".html" in url:
+        url_id = url.split("/")[-1].split(".")[-2]
+    else:
+        url_id = url.split("/")[-1]
+
+    part_one = f"{rand_str()}||{url_id}||{rand_str()}||streamsb"
+    final_url = f"https://watchsb.com/sources48/{hex_encode(part_one)}"
+    headers = {"watchsb": "sbstream", "referer": "url",
+               "user-agent": "Mozilla/5.0 (Linux; Android 11; 2201116PI) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Mobile Safari/537.36"}
+
+    dl_url = requests.get(final_url, headers=headers).json()["stream_data"]["file"]
+    return dl_url
+
+
 def streamlare(url):
-    CONT_ID = re.compile(r"/[ve]/([^?#&/]+)")
-    api = "https://streamlare.com/api/video/download/get"
-    client = cloudscraper.create_scraper(allow_brotli=False)
-    cont_id = CONT_ID.search(url)[1]
+    CONTENT_ID = re.compile(r"/[ve]/([^?#&/]+)")
+    API_LINK = "https://sltube.org/api/video/download/get"
+    user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4136.7 Safari/537.36"
+    client = requests.Session()
+    content_id = CONTENT_ID.search(url).group(1)
     r = client.get(url).text
     soup = BeautifulSoup(r, "html.parser")
     csrf_token = soup.find("meta", {"name": "csrf-token"}).get("content")
     xsrf_token = client.cookies.get_dict()["XSRF-TOKEN"]
-    headers = {
-        "x-requested-with": "XMLHttpRequest",
-        "x-csrf-token": csrf_token,
-        "x-xsrf-token": xsrf_token,
-    }
-    data = {"id": cont_id}
-    res = client.post(api, headers=headers, data=data).json()
-    res = res.replace(" ", "%20")
-    return res
+    headers = {"x-requested-with": "XMLHttpRequest", "x-csrf-token": csrf_token, "x-xsrf-token": xsrf_token,
+               'referer': url, "user-agent": user_agent}
+    payload = {"id": content_id}
+    dl_url = client.post(API_LINK, headers=headers, data=payload).json()["result"]["Original"]["url"]
+    return dl_url
 
 
 def streamtape(url):
-    return Bypass().bypass_streamtape(url)
+    response = requests.get(url)
+    if (videolink := re.findall(r"document.*((?=id\=)[^\"']+)", response.text)):
+        nexturl = "https://streamtape.com/get_video?" + videolink[-1]
+        return nexturl
+
+
+def uploadbaz(url):
+    url = url[:-1] if url[-1] == '/' else url
+    token = url.split("/")[-1]
+    client = requests.Session()
+    headers = {
+        'content-type': 'application/x-www-form-urlencoded',
+        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36',
+     }
+    data = {
+        'op': 'download2',
+        'id': token,
+        'rand': '',
+        'referer': '',
+        'method_free': '',
+        'method_premium': '',
+    }
+    response = client.post(url, headers=headers, data=data, allow_redirects=False)
+    return response.headers["Location"]
 
 
 def uploadee(url):
     soup = BeautifulSoup(requests.get(url).content, "lxml")
     sa = soup.find("a", attrs={"id": "d_l"})
     return sa["href"]
+
+
+def uppit(url):
+    url = url[:-1] if url[-1] == '/' else url
+    token = url.split("/")[-1]
+    client = requests.Session()
+    headers = {
+        'content-type': 'application/x-www-form-urlencoded',
+        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36',
+    }
+    data = {
+        'op': 'download2',
+        'id': token,
+        'rand': '',
+        'referer': '',
+        'method_free': '',
+        'method_premium': '',
+    }
+    response = client.post(url, headers=headers, data=data)
+    soup = BeautifulSoup(response.text, "html.parser")
+    download_url = soup.find("span", {'style': 'background:#f9f9f9;border:1px dotted #bbb;padding:7px;'}).a.get("href")
+    return download_url
+
+
+def userscloud(url):
+    url = url[:-1] if url[-1] == '/' else url
+    token = url.split("/")[-1]
+    client = requests.Session()
+    headers = {
+        'content-type': 'application/x-www-form-urlencoded',
+        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36',
+    }
+    data = {
+        'op': 'download2',
+        'id': token,
+        'rand': '',
+        'referer': '',
+        'method_free': '',
+        'method_premium': '',
+    }
+    response = client.post(url, headers=headers, data=data, allow_redirects=False)
+    return response.headers['Location']
 
 
 def uservideo(url):
@@ -511,4 +649,25 @@ def yandex_disk(url):
 
 
 def zippyshare(url):
-    return Bypass().bypass_zippyshare(url)
+    client = requests.Session()
+    response = client.get(url)
+    if (dlbutton := re.search(r'href = "([^"]+)" \+ \(([^)]+)\) \+ "([^"]+)', response.text)):
+        folder, math_chall, filename = dlbutton.groups()
+        math_chall = eval(math_chall)
+        return "%s%s%s%s" % (re.search(r"https?://[^/]+", response.url).group(0), folder, math_chall, filename)
+    soup = BeautifulSoup(response.text, "html.parser")
+    if (script := soup.find("script", text=re.compile("(?si)\s*var a = \d+;"))):
+        sc = str(script)
+        var = re.findall(r"var [ab] = (\d+)", sc)
+        omg = re.findall(r"\.omg (!?=) [\"']([^\"']+)", sc)
+        file = re.findall(r'"(/[^"]+)', sc)
+        if var and omg:
+            a, b = var
+            if eval(f"{omg[0][1]!r} {omg[1][0]} {omg[1][1]!r}") or 1:
+                a = math.ceil(int(a) // 3)
+            else:
+                a = math.floor(int(a) // 3)
+            divider = int(re.findall(f"(\d+)%b", sc)[0])
+
+            return re.search(r"(^https://www\d+.zippyshare.com)", response.url).group(1) + \
+                   "".join([file[0], str(a + (divider % int(b))), file[1]])

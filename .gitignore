@@ -1,5 +1,6 @@
 __pycache__/*
 web/__pycache__/*
+web/helpers/__pycache__/*
 web/scripts/__pycache__/*
 web/scripts/telegraph/__pycache__/*
 .vscode

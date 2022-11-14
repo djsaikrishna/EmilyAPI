@@ -13,6 +13,7 @@ Jinja2
 lk21
 lxml
 MarkupSafe
+PyBypass
 pyparsing
 requests
 requests-toolbelt

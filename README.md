@@ -39,6 +39,7 @@ C. Docker Compose
     4. `/api/paste` for Pasting
     5. `/api/scraper` for Site Scraping
     6. `/api/shorten` for Link Shorteners
+    7. `/api/multi` for all Bypassers, Generators and Scrapers combined
 3. The data should be in json format and should have two of these keys:
     1. `type` - Specify Link Bypasser/Direct-Gen Type to use
     2. `url` - Specify the link which is to be sent to Bypass/Direct-Link (This Key is not for Paste & Misc Services)
@@ -60,12 +61,13 @@ C. Docker Compose
 4. Results for Bunkr, CybderDrop, Pixl & SendCM as well FileCrypt, Bhadoo Index & Psa.pm Scraper will be in Telegraph URLs.
 5. Psa Scraper does not work anymore as of 16/10/2022. Still I kept it since I hope the script will be updated soon.
 6. Both the Scripts `script_a` and `script_b` are added for bypassing for adlinks which share similar working. Examples - 1[https://link.mdisk.website/Pnms055v] & 2[https://xpshort.com/9DNKf].
+7. Only use 'url' key for making requests to multifunction API Endpoint. The server is meant to autodetect desired function.
 
 ## Available Link Bypassers
 
 * The following bypassers (with corresponding types) are supported:
 
-| S.No. | Bypasser        |     Type      |
+| S.No. | Bypasser        | Type          |
 |-------|-----------------|---------------|
 | 1.    | AdFly           | `adfly`       |
 | 2.    | AdrinoLinks     | `adrinolinks` |
@@ -79,7 +81,7 @@ C. Docker Compose
 | 10.   | Linkvertise     | `linkvertise` |
 | 11.   | Bypass.vip API  | `multi_aio`   |
 | 12.   | Ouo             | `ouo`         |
-| 13.   | PrivateMoviez   |`privatemoviez`|
+| 13.   | PrivateMoviez   | `privatemoviez` |
 | 14.   | RewayatCafe     | `rewayatcafe` |
 | 15.   | RockLinks       | `rocklinks`   |
 | 16.   | Script - A      | `script_a`    |
@@ -90,6 +92,9 @@ C. Docker Compose
 | 21.   | Sirigan         | `sirigan`     |
 | 22.   | TnLink          | `tnlink`      |
 | 23.   | Xpshort         | `xpshort`     |
+| 24.   | Pkin            | `pkin`        |
+| 25.   | Shortly         | `shortly`     |
+| 26.   | Thinfi          | `thinfi`      |
 
 ## Available Direct-Link Generators
 
@@ -134,6 +139,12 @@ C. Docker Compose
 | 35.   | SendCM          | `sendcm`          |
 | 36.   | GDBot           | `gdbot`           |
 | 37.   | MDisk MPD       | `mdisk_mpd`       |
+| 38.   | Dropbox         | `dropbox`         |
+| 39.   | MP4Upload       | `mp4upload`       |
+| 40.   | StreamSB        | `streamsb`        |
+| 41.   | UploadBaz       | `uploadbaz`       |
+| 42.   | Uppit           | `uppit`           |
+| 43.   | UsersCloud      | `userscloud`      |
 
 ## Available Misc Services
 

@@ -8,6 +8,8 @@ import cloudscraper
 import requests
 from bs4 import BeautifulSoup
 
+from web.helpers.regex import *
+
 BIFM_URL = os.environ.get("BIFM_URL", "https://bifm.tacohitbox.com/api/bypass?url")
 
 
@@ -89,7 +91,7 @@ def bifm(url):
 
 
 def droplink(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
+    client = requests.Session()
     res = client.get(url)
     ref = re.findall("action[ ]{0,}=[ ]{0,}['|\"](.*?)['|\"]", res.text)[0]
     h = {"referer": ref}
@@ -109,7 +111,7 @@ def droplink(url):
 
 
 def gplinks(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
+    client = requests.Session()
     p1 = urllib.parse.urlparse(url)
     final_url = f"{p1.scheme}://{p1.netloc}/links/go"
     res = client.head(url)
@@ -151,7 +153,7 @@ def gtlinks(url):
 
 
 def gyanilinks(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
+    client = requests.Session()
     dom = "https://go.kinemaster.cc"
     re = client.get(url)
     f_url = re.url
@@ -170,7 +172,7 @@ def gyanilinks(url):
 
 
 def htpmovies(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
+    client = requests.Session()
     a = client.get(url, allow_redirects=True).text
     b = a.split('("')[-1]
     t_url = b.split('")')[0]
@@ -268,7 +270,7 @@ def RecaptchaV3(ANCHOR_URL):
 
 
 def ouo(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
+    client = requests.Session()
     tempurl = url.replace("ouo.press", "ouo.io")
     p = urllib.parse.urlparse(tempurl)
     id = tempurl.split("/")[-1]
@@ -290,7 +292,7 @@ def ouo(url):
 
 
 def privatemoviez(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
+    client = requests.Session()
     r = client.get(url)
     soup = BeautifulSoup(r.text, "html.parser")
     test = soup.text
@@ -308,6 +310,23 @@ def privatemoviez(url):
     time.sleep(10)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
     return r.json()["url"]
+
+
+def pkin(url):
+    url = url[:-1] if url[-1] == '/' else url
+    domain = "https://go.paisakamalo.in/"
+    referer = "https://techkeshri.com/"
+    token = url.split("/")[-1]
+    user_agent = "Mozilla/5.0 (Linux; Android 11; 2201116PI) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Mobile Safari/537.36"
+    client = requests.Session()
+    response = client.get(domain + token, headers={"referer": referer, "user-agent": user_agent})
+    soup = BeautifulSoup(response.content, "html.parser")
+    inputs = soup.find(id="go-link").find_all(name="input")
+    data = {input.get('name'): input.get('value') for input in inputs}
+    time.sleep(3)
+    headers = {"x-requested-with": "XMLHttpRequest", "user-agent": user_agent}
+    bypassed_url = client.post(domain + "links/go", data=data, headers=headers).json()["url"]
+    return bypassed_url
 
 
 def rewayatcafe(url):
@@ -355,7 +374,7 @@ def rocklinks(url):
 
 
 def script_b(domain, url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
+    client = requests.Session()
     res = client.get(url)
     soup = BeautifulSoup(res.text, "html.parser")
     soup = soup.find("form").findAll("input")
@@ -389,7 +408,7 @@ def script_b(domain, url):
 
 
 def script_a(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
+    client = requests.Session()
     res = client.get(url)
     soup = BeautifulSoup(res.text, "html.parser")
     soup = soup.find("form")
@@ -451,7 +470,7 @@ def shorte(url):
 
 
 def shortingly(url):
-    client = cloudscraper.create_scraper(allow_brotli=False)
+    client = requests.Session()
     dom = "https://go.techyjeeshan.xyz"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
@@ -468,6 +487,15 @@ def shortingly(url):
     return des_url
 
 
+def shortly(url):
+    url = url[:-1] if url[-1] == '/' else url
+    token = url.split("/")[-1]
+    shortly_bypass_api = "https://www.shortly.xyz/getlink.php/"
+    response = requests.post(shortly_bypass_api, data={"id": token},
+                             headers={"referer": "https://www.shortly.xyz/link"}).text
+    return response
+
+
 def sirigan(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
     time.sleep(3)
@@ -479,6 +507,12 @@ def sirigan(url):
         except BaseException:
             break
     return url.split("url=")[-1]
+
+
+def thinfi(url):
+    response = requests.get(url)
+    des_url = BeautifulSoup(response.content, "html.parser").p.a.get("href")
+    return des_url
 
 
 def tnlink(url):
