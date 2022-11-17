@@ -112,15 +112,15 @@ def dulink(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
     DOMAIN = "https://cac.teckypress.in/"
     ref = "https://teckypress.in/"
-    url = url[:-1] if url[-1] == '/' else url
+    url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{DOMAIN}/{code}"
     h = {"referer": ref}
     resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
     inputs = soup.find_all("input")
-    data = { input.get('name'): input.get('value') for input in inputs }
-    h = { "x-requested-with": "XMLHttpRequest" }
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
     des_url = r.json()["url"]
     des_url = des_url.replace(" ", "%20")
@@ -495,8 +495,8 @@ def short2url(url):
     DOMAIN = "https://technemo.xyz/blog"
     ref = "https://mytop5.club/"
     if "/full?api=" in url:
-        url = requests.get(url, allow_redirects = True).url
-        url = url[:-1] if url[-1] == '/' else url
+        url = requests.get(url, allow_redirects=True).url
+        url = url[:-1] if url[-1] == "/" else url
         code = url.split("/")[-1].replace("?", "")
     else:
         code = url.split("/")[-1]
@@ -505,8 +505,8 @@ def short2url(url):
     resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
     inputs = soup.find_all("input")
-    data = { input.get('name'): input.get('value') for input in inputs }
-    h = { "x-requested-with": "XMLHttpRequest" }
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
     time.sleep(10)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
     des_url = r.json()["url"]

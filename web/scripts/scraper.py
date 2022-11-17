@@ -563,17 +563,19 @@ def sharespark_scrape(url):
         if next2_s and isinstance(next2_s, Tag) and next2_s.name == "br":
             if str(next_s).strip():
                 List = next_s.split()
-                if re.match(r'^(480p|720p|1080p)(.+)? Links:\Z', next_s):
-                    rslt += f'<b>{next_s.replace("Links:", "GDToT Links :")}</b><br><br>'
+                if re.match(r"^(480p|720p|1080p)(.+)? Links:\Z", next_s):
+                    rslt += (
+                        f'<b>{next_s.replace("Links:", "GDToT Links :")}</b><br><br>'
+                    )
                 for s in List:
-                    ns = re.sub(r'\(|\)', '', s)
-                    if re.match(r'https?://.+\.gdtot\.\S+', ns):
+                    ns = re.sub(r"\(|\)", "", s)
+                    if re.match(r"https?://.+\.gdtot\.\S+", ns):
                         r = client.get(ns)
                         soup = BeautifulSoup(r.content, "html.parser")
                         title = soup.title
                         rslt += f"<code>{(title.text).replace('GDToT | ' , '')}</code><br>{ns}<br><br>"
-                    elif re.match(r'https?://pastetot\.\S+', ns):
-                        nxt = re.sub(r'\(|\)|(https?://pastetot\.\S+)', '', next_s)
+                    elif re.match(r"https?://pastetot\.\S+", ns):
+                        nxt = re.sub(r"\(|\)|(https?://pastetot\.\S+)", "", next_s)
                         rslt += f"<br><code>{nxt}</code><br>{ns}<br>"
     tlg_url = telegraph_paste(rslt)
     return tlg_url
