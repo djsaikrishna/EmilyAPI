@@ -11,6 +11,8 @@ def all_in_one(url):
     is_artstation = is_artstation_link(url)
     if "droplink." in url or "droplinks." in url:
         res = droplink(url)
+    elif "dulink." in url:
+        res = dulink(url)
     elif "gplink." in url or "gplinks." in url:
         res = gplinks(url)
     elif any(x in url for x in linkvertise_list):
@@ -38,6 +40,8 @@ def all_in_one(url):
         res = gyanilinks(url)
     elif "shareus." in url:
         res = shareus(url)
+    elif "short2url." in url:
+        res = short2url(url)
     elif "shortingly." in url:
         res = shortingly(url)
     elif "tnlink." in url:
@@ -162,7 +166,7 @@ def all_in_one(url):
     elif "olamovies." in url:
         res = olamovies_scrape(url)
     elif "psa." in url:
-        return "PSA does not work now due to CloudFlare Protection!"
+        res = psa_scrape(url)
     elif "toonworld4all." in url:
         res = toonworld4all_scrape(url)
     elif "sharespark." in url:

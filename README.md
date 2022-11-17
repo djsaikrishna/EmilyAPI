@@ -95,6 +95,8 @@ C. Docker Compose
 | 24.   | Pkin            | `pkin`        |
 | 25.   | Shortly         | `shortly`     |
 | 26.   | Thinfi          | `thinfi`      |
+| 27.   | Short2url       | `short2url`   |
+| 28.   | Dulink          | `dulink`      |
 
 ## Available Direct-Link Generators
 
