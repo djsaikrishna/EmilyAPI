@@ -376,10 +376,10 @@ def taemovies_scrape(url):
     rslt = f"User URL : {url}<br><br>"
     url = url + "/" if url[-1] != "/" else url
     res = client.get(url, allow_redirects=True)
-    soup = BeautifulSoup(res.content, 'html.parser')
+    soup = BeautifulSoup(res.content, "html.parser")
     x = soup.select('a[href^="https://shortingly.me"]')
     for a in x:
-        gd_urls.append(a['href'])
+        gd_urls.append(a["href"])
     rslt += "Gdrive Links :<br><br>"
     for gd in gd_urls:
         rslt += f"• {gd}<br>"

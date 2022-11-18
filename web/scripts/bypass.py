@@ -95,10 +95,10 @@ def droplink(url):
     res = client.get(url, headers=h)
     soup = BeautifulSoup(res.content, "html.parser")
     inputs = soup.find(id="go-link").find_all(name="input")
-    data = {input.get('name'): input.get('value') for input in inputs}
+    data = {input.get("name"): input.get("value") for input in inputs}
     time.sleep(4)
     headers = {"x-requested-with": "XMLHttpRequest"}
-    res = client.post(domain+"links/go", data=data, headers=headers).json()
+    res = client.post(domain + "links/go", data=data, headers=headers).json()
     return res["url"]
 
 
