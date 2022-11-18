@@ -370,6 +370,23 @@ def magnet_scrape(url):
     return tlg_url
 
 
+def taemovies_scrape(url):
+    gd_urls = []
+    client = requests.Session()
+    rslt = f"User URL : {url}<br><br>"
+    url = url + "/" if url[-1] != "/" else url
+    res = client.get(url, allow_redirects=True)
+    soup = BeautifulSoup(res.content, 'html.parser')
+    x = soup.select('a[href^="https://shortingly.me"]')
+    for a in x:
+        gd_urls.append(a['href'])
+    rslt += "Gdrive Links :<br><br>"
+    for gd in gd_urls:
+        rslt += f"• {gd}<br>"
+    rslt += "<br><br><b><u>NOTE:</u></b><i>The GDrive Links are actually Shortingly AdLinks. Bypass them manually</i>"
+    return rslt
+
+
 def toonworld4all_scrape(url):
     client = requests.Session()
     ad_urls = f"<b>User URL :</b> <code>{url}</code><br>"
@@ -434,6 +451,12 @@ def atishmkv_scrape(url):
     ):
         h = f.get("href")
         rslt += f"• <code>{h}</code><br>"
+    for g in soup.find_all(
+        "a",
+        {"class": "wpel-icon-right"},
+    ):
+        i = g.get("href")
+        rslt += f"• <code>{i}</code><br>"
     tlg_url = telegraph_paste(rslt)
     return tlg_url
 
@@ -441,7 +464,7 @@ def atishmkv_scrape(url):
 def moviesdrama_scrape(url):
     client = requests.Session()
     rslt = f"<b>User URL :</b> <code>{url}</code><br>"
-    rslt += f"<i>GDrive Links:</i><br>"
+    rslt += f"<i>Links:</i><br>"
     url = url + "/" if url[-1] != "/" else url
     p = client.get(url)
     soup = BeautifulSoup(p.text, "html.parser")
@@ -462,7 +485,7 @@ def cinevood_scrape(url):
     t_urls = []
     client = requests.Session()
     rslt = f"<b>User URL :</b> <code>{url}</code><br>"
-    rslt += f"<i>GDrive Links:</i><br>"
+    rslt += f"<i>Links:</i><br>"
     url = url + "/" if url[-1] != "/" else url
     p = client.get(url)
     soup = BeautifulSoup(p.text, "html.parser")

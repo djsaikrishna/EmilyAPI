@@ -1,7 +1,6 @@
 import PyBypass
 
 from web.helpers.lists import *
-from web.helpers.regex import *
 from web.scripts.bypass import *
 from web.scripts.direct import *
 from web.scripts.scraper import *

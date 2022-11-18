@@ -217,7 +217,8 @@ C. Docker Compose
 | 11.   | Website Magnet Scraper | `magnet_scrap`       |
 | 12.   | OlaMovies Scraper      | `olamovies_scrap`    |
 | 13.   | Psa.pm Site Scraper    | `psa_scrap`          |
-| 14.   | Toonworld4all Scraper  | `toonworld4all_scrap`|
+| 14.   | TaeMovies Site Scraper | `taemovies_scrap`    |
+| 15.   | Toonworld4all Scraper  | `toonworld4all_scrap`|
 
 
 ## Sample Requests

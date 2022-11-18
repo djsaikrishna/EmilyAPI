@@ -90,21 +90,15 @@ def bifm(url):
 
 def droplink(url):
     client = requests.Session()
-    res = client.get(url)
-    ref = re.findall("action[ ]{0,}=[ ]{0,}['|\"](.*?)['|\"]", res.text)[0]
-    h = {"referer": ref}
+    domain = "https://droplink.co/"
+    h = {"referer": "https://yoshare.net"}
     res = client.get(url, headers=h)
-    bs4 = BeautifulSoup(res.content, "lxml")
-    inputs = bs4.find_all("input")
-    data = {input.get("name"): input.get("value") for input in inputs}
-    h = {
-        "content-type": "application/x-www-form-urlencoded",
-        "x-requested-with": "XMLHttpRequest",
-    }
-    p = urllib.parse.urlparse(url)
-    final_url = f"{p.scheme}://{p.netloc}/links/go"
+    soup = BeautifulSoup(res.content, "html.parser")
+    inputs = soup.find(id="go-link").find_all(name="input")
+    data = {input.get('name'): input.get('value') for input in inputs}
     time.sleep(4)
-    res = client.post(final_url, data=data, headers=h).json()
+    headers = {"x-requested-with": "XMLHttpRequest"}
+    res = client.post(domain+"links/go", data=data, headers=headers).json()
     return res["url"]
 
 
@@ -494,7 +488,7 @@ def short2url(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
     DOMAIN = "https://technemo.xyz/blog"
     ref = "https://mytop5.club/"
-    if "/full?api=" in url:
+    if ("short2url." and "/full?api=") in url:
         url = requests.get(url, allow_redirects=True).url
         url = url[:-1] if url[-1] == "/" else url
         code = url.split("/")[-1].replace("?", "")
