@@ -97,6 +97,7 @@ C. Docker Compose
 | 26.   | Thinfi          | `thinfi`      |
 | 27.   | Short2url       | `short2url`   |
 | 28.   | Dulink          | `dulink`      |
+| 29.   | Ez4Short        | `ez4short`    |
 
 ## Available Direct-Link Generators
 
@@ -218,7 +219,8 @@ C. Docker Compose
 | 12.   | OlaMovies Scraper      | `olamovies_scrap`    |
 | 13.   | Psa.pm Site Scraper    | `psa_scrap`          |
 | 14.   | TaeMovies Site Scraper | `taemovies_scrap`    |
-| 15.   | Toonworld4all Scraper  | `toonworld4all_scrap`|
+| 15.   | TeleguFlix Scraper     | `teleguflix_scrap`   |
+| 16.   | Toonworld4all Scraper  | `toonworld4all_scrap`|
 
 
 ## Sample Requests

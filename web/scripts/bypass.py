@@ -69,6 +69,23 @@ def adrinolinks(url):
     return des_url
 
 
+def ez4short(url):
+    client = cloudscraper.create_scraper(allow_brotli=False)
+    DOMAIN = "https://ez4short.com"
+    ref = "https://techmody.io/"
+    h = {"referer": ref}
+    resp = client.get(url, headers=h)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all("input")
+    data = {input.get('name'): input.get('value') for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(8)
+    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
+    des_url = r.json()["url"]
+    des_url = des_url.replace(" ", "%20")
+    return des_url
+
+
 def encod(__str: str) -> str:
     str_bytes = __str.encode("ascii")
     bytes_b64 = standard_b64encode(str_bytes)
@@ -98,8 +115,9 @@ def droplink(url):
     data = {input.get("name"): input.get("value") for input in inputs}
     time.sleep(4)
     headers = {"x-requested-with": "XMLHttpRequest"}
-    res = client.post(domain + "links/go", data=data, headers=headers).json()
-    return res["url"]
+    des_url = client.post(domain + "links/go", data=data, headers=headers).json()["url"]
+    des_url = des_url.replace(" ", "%20")
+    return des_url
 
 
 def dulink(url):
@@ -197,8 +215,9 @@ def htpmovies(url):
     data = {input.get("name"): input.get("value") for input in inputs}
     h = {"x-requested-with": "XMLHttpRequest"}
     time.sleep(10)
-    r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
-    return r.json()["url"]
+    des_url = client.post(f"{DOMAIN}/links/go", data=data, headers=h).json()["url"]
+    des_url = des_url.replace(" ", "%20")
+    return des_url
 
 
 def hypershort(url):
@@ -225,13 +244,14 @@ def hypershort(url):
     time.sleep(1)
     inputs = soup.find(id="go-link").find_all(name="input")
     data = {input.get("name"): input.get("value") for input in inputs}
-    final_response = client.post(
+    des_url = client.post(
         "https://blog.miuiflash.com/blog/links/go",
         data=data,
         cookies=tokenize_url_resp.cookies,
         headers={"x-requested-with": "XMLHttpRequest", "referer": tokenize_url},
     ).json()["url"]
-    return final_response
+    des_url = des_url.replace(" ", "%20")
+    return des_url
 
 
 def linkvertise(url):
@@ -320,7 +340,9 @@ def privatemoviez(url):
     h = {"x-requested-with": "XMLHttpRequest"}
     time.sleep(10)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
-    return r.json()["url"]
+    des_url = r.json()["url"]
+    des_url = des_url.replace(" ", "%20")
+    return des_url
 
 
 def pkin(url):
@@ -338,10 +360,11 @@ def pkin(url):
     data = {input.get("name"): input.get("value") for input in inputs}
     time.sleep(3)
     headers = {"x-requested-with": "XMLHttpRequest", "user-agent": user_agent}
-    bypassed_url = client.post(domain + "links/go", data=data, headers=headers).json()[
+    des_url = client.post(domain + "links/go", data=data, headers=headers).json()[
         "url"
     ]
-    return bypassed_url
+    des_url = des_url.replace(" ", "%20")
+    return des_url
 
 
 def rewayatcafe(url):
@@ -360,8 +383,9 @@ def rewayatcafe(url):
     p = urllib.parse.urlparse(url)
     final_url = f"{p.scheme}://{p.netloc}/links/go"
     time.sleep(10)
-    res = client.post(final_url, data=data, headers=h).json()
-    return res["url"]
+    des_url = client.post(final_url, data=data, headers=h).json()["url"]
+    des_url = des_url.replace(" ", "%20")
+    return des_url
 
 
 def rocklinks(url):
@@ -554,6 +578,7 @@ def sirigan(url):
 def thinfi(url):
     response = requests.get(url)
     des_url = BeautifulSoup(response.content, "html.parser").p.a.get("href")
+    des_url = des_url.replace(" ", "%20")
     return des_url
 
 
@@ -578,6 +603,7 @@ def tnlink(url):
     dest_url = client.post(
         "https://gadgets.usanewstoday.club/links/go", data=data, headers=h2
     ).json()["url"]
+    dest_url = dest_url.replace(" ", "%20")
     return dest_url
 
 
@@ -596,5 +622,6 @@ def xpshort(url):
     data = {input.get("name"): input.get("value") for input in inputs}
     h = {"x-requested-with": "XMLHttpRequest"}
     time.sleep(8)
-    r = client.post(f"{dom}/links/go", data=data, headers=h)
-    return r.json()["url"]
+    des_url = client.post(f"{dom}/links/go", data=data, headers=h).json()["url"]
+    des_url = des_url.replace(" ", "%20")
+    return des_url

@@ -384,7 +384,26 @@ def taemovies_scrape(url):
     for gd in gd_urls:
         rslt += f"• {gd}<br>"
     rslt += "<br><br><b><u>NOTE:</u></b><i>The GDrive Links are actually Shortingly AdLinks. Bypass them manually</i>"
-    return rslt
+    tlg_url = telegraph_paste(rslt)
+    return tlg_url
+
+
+def teleguflix_scrape(url):
+    gd_urls = []
+    client = requests.Session()
+    rslt = f"User URL : {url}<br><br>"
+    url = url + "/" if url[-1] != "/" else url
+    res = client.get(url, allow_redirects=True)
+    soup = BeautifulSoup(res.content, "html.parser")
+    x = soup.select('a[href^="https://shortingly.me"]')
+    for a in x:
+        gd_urls.append(a["href"])
+    rslt += "Gdrive Links :<br><br>"
+    for gd in gd_urls:
+        rslt += f"• {gd}<br>"
+    rslt += "<br><br><b><u>NOTE:</u></b><i>The GDrive Links are actually Shortingly AdLinks. Bypass them manually</i>"
+    tlg_url = telegraph_paste(rslt)
+    return tlg_url
 
 
 def toonworld4all_scrape(url):

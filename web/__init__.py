@@ -14,9 +14,9 @@ logging.getLogger("flask_restful").setLevel(logging.WARNING)
 
 
 from web.scripts.bypass import (adfly, adrinolinks, bifm, droplink, dulink,
-                                gplinks, gtlinks, gyanilinks, htpmovies,
-                                hypershort, linkvertise, multi_aio, ouo, pkin,
-                                privatemoviez, rewayatcafe, rocklinks,
+                                ez4short, gplinks, gtlinks, gyanilinks,
+                                htpmovies, hypershort, linkvertise, multi_aio,
+                                ouo, pkin, privatemoviez, rewayatcafe, rocklinks,
                                 script_a, script_b, shareus, short2url, shorte,
                                 shortingly, shortly, sirigan, thinfi, tnlink,
                                 xpshort)
@@ -45,7 +45,7 @@ from web.scripts.scraper import (atishmkv_scrape, cinevez_scrape,
                                  moviesdrama_scrape, olamovies_scrape,
                                  privatemoviez_scrape, psa_scrape,
                                  sharespark_scrape, taemovies_scrape,
-                                 toonworld4all_scrape)
+                                 teleguflix_scrape, toonworld4all_scrape)
 from web.scripts.shorten import (bitly_shorten, clckru_shorten, clilp_shorten,
                                  dagd_shorten, isgd_shorten, osdb_shorten,
                                  tinyurl_shorten, ttm_shorten, vgd_shorten)
@@ -56,6 +56,7 @@ BYP_SUP_SITES = {
     "bifm": bifm,
     "droplink": droplink,
     "dulink": dulink,
+    "ez4short": ez4short,
     "gplinks": gplinks,
     "gtlinks": gtlinks,
     "gyanilinks": gyanilinks,
@@ -159,6 +160,7 @@ SCRAPE_SUP_SITES = {
     "igggames_scrap": igggames_scrape,
     "magnet_scrap": magnet_scrape,
     "taemovies_scrap": taemovies_scrape,
+    "teleguflix_scrap": teleguflix_scrape,
     "toonworld4all_scrap": toonworld4all_scrape,
     "atishmkv_scrap": atishmkv_scrape,
     "moviesdrama_scrap": moviesdrama_scrape,
