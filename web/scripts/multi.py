@@ -24,6 +24,8 @@ def all_in_one(url):
         res = privatemoviez(url)
     elif "hypershort." in url:
         res = hypershort(url)
+    elif "ez4short." in url:
+        res = ez4short(url)
     elif "sirigan.my.id" in url:
         res = sirigan(url)
     elif "ouo.io" in url or "ouo.press" in url:
@@ -41,6 +43,8 @@ def all_in_one(url):
         res = shareus(url)
     elif "short2url." in url:
         res = short2url(url)
+    elif "krownlinks." in url:
+        res = krownlinks(url)
     elif "shortingly." in url:
         res = shortingly(url)
     elif "tnlink." in url:
@@ -166,6 +170,10 @@ def all_in_one(url):
         res = olamovies_scrape(url)
     elif "psa." in url:
         res = psa_scrape(url)
+    elif "taemovies." in url:
+        res = taemovies_scrape(url)
+    elif "teleguflix." in url:
+        res = teleguflix_scrape(url)
     elif "toonworld4all." in url:
         res = toonworld4all_scrape(url)
     elif "sharespark." in url:

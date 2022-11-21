@@ -254,6 +254,23 @@ def hypershort(url):
     return des_url
 
 
+def krownlinks(url):
+    client = requests.session()
+    dom = "https://go.exozed.com"
+    url = url[:-1] if url[-1] == '/' else url
+    code = url.split("/")[-1]
+    final_url = f"{dom}/{code}"
+    resp = client.get(final_url)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find(id="go-link").find_all(name="input")
+    data = { input.get('name'): input.get('value') for input in inputs }
+    h = { "x-requested-with": "XMLHttpRequest" }
+    time.sleep(10)
+    des_url = client.post(f"{dom}/links/go", data=data, headers=h).json()['url']
+    des_url = des_url.replace(" ", "%20")
+    return des_url
+
+
 def linkvertise(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
     headers = {
@@ -607,16 +624,15 @@ def tnlink(url):
 
 def xpshort(url):
     client = requests.Session()
-    dom = "https://push.bdnewsx.com"
+    dom = "https://xpshort.com"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{dom}/{code}"
-    r = client.get(url)
-    ref = re.findall("action[ ]{0,}=[ ]{0,}['|\"](.*?)['|\"]", r.text)[0]
+    ref = "https://m.kongutoday.com"
     h = {"referer": ref}
     resp = client.get(final_url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
-    inputs = soup.find(id="go-link").find_all(name="input")
+    inputs = soup.find_all(name="input")
     data = {input.get("name"): input.get("value") for input in inputs}
     h = {"x-requested-with": "XMLHttpRequest"}
     time.sleep(8)

@@ -19,7 +19,7 @@ from web.scripts.bypass import (adfly, adrinolinks, bifm, droplink, dulink,
                                 ouo, pkin, privatemoviez, rewayatcafe,
                                 rocklinks, script_a, script_b, shareus,
                                 short2url, shorte, shortingly, shortly,
-                                sirigan, thinfi, tnlink, xpshort)
+                                sirigan, thinfi, tnlink, xpshort, krownlinks)
 from web.scripts.direct import (androiddatahost, anonfiles, antfiles,
                                 artstation, bunkr_cyber, dropbox, fembed,
                                 filesIm, gdbot, github, gofile, hxfile,
@@ -62,6 +62,7 @@ BYP_SUP_SITES = {
     "gyanilinks": gyanilinks,
     "htpmovies": htpmovies,
     "hypershort": hypershort,
+    "krownlinks": krownlinks,
     "linkvertise": linkvertise,
     "multi_aio": multi_aio,
     "ouo": ouo,
