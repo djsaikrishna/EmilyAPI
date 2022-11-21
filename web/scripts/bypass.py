@@ -257,16 +257,16 @@ def hypershort(url):
 def krownlinks(url):
     client = requests.session()
     dom = "https://go.exozed.com"
-    url = url[:-1] if url[-1] == '/' else url
+    url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{dom}/{code}"
     resp = client.get(final_url)
     soup = BeautifulSoup(resp.content, "html.parser")
     inputs = soup.find(id="go-link").find_all(name="input")
-    data = { input.get('name'): input.get('value') for input in inputs }
-    h = { "x-requested-with": "XMLHttpRequest" }
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
     time.sleep(10)
-    des_url = client.post(f"{dom}/links/go", data=data, headers=h).json()['url']
+    des_url = client.post(f"{dom}/links/go", data=data, headers=h).json()["url"]
     des_url = des_url.replace(" ", "%20")
     return des_url
 
