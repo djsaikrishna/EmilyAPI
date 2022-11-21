@@ -77,7 +77,7 @@ def ez4short(url):
     resp = client.get(url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
     inputs = soup.find_all("input")
-    data = {input.get('name'): input.get('value') for input in inputs}
+    data = {input.get("name"): input.get("value") for input in inputs}
     h = {"x-requested-with": "XMLHttpRequest"}
     time.sleep(8)
     r = client.post(f"{DOMAIN}/links/go", data=data, headers=h)
@@ -360,9 +360,7 @@ def pkin(url):
     data = {input.get("name"): input.get("value") for input in inputs}
     time.sleep(3)
     headers = {"x-requested-with": "XMLHttpRequest", "user-agent": user_agent}
-    des_url = client.post(domain + "links/go", data=data, headers=headers).json()[
-        "url"
-    ]
+    des_url = client.post(domain + "links/go", data=data, headers=headers).json()["url"]
     des_url = des_url.replace(" ", "%20")
     return des_url
 
