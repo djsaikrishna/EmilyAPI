@@ -98,6 +98,7 @@ C. Docker Compose
 | 27.   | Short2url       | `short2url`   |
 | 28.   | Dulink          | `dulink`      |
 | 29.   | Ez4Short        | `ez4short`    |
+| 30.   | Try2Link        | `try2link`    |
 
 ## Available Direct-Link Generators
 

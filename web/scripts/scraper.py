@@ -8,7 +8,7 @@ import requests
 from bs4 import BeautifulSoup, NavigableString, Tag
 
 from web import LOGGER
-from web.scripts.bypass import htpmovies, privatemoviez, rocklinks
+from web.scripts.bypass import htpmovies, privatemoviez, rocklinks, try2link
 from web.scripts.pasting import telegraph_paste
 
 next_page = False
@@ -64,27 +64,6 @@ def index_scrape(url):
     return tlg_url
 
 
-def try2link_bypass(url):
-    client = requests.Session()
-    url = url[:-1] if url[-1] == "/" else url
-    params = (("d", int(time.time()) + (60 * 4)),)
-    r = client.get(url, params=params, headers={"Referer": "https://newforex.online/"})
-    soup = BeautifulSoup(r.text, "html.parser")
-    inputs = soup.find(id="go-link").find_all(name="input")
-    data = {input.get("name"): input.get("value") for input in inputs}
-    time.sleep(7)
-    headers = {
-        "Host": "try2link.com",
-        "X-Requested-With": "XMLHttpRequest",
-        "Origin": "https://try2link.com",
-        "Referer": url,
-    }
-    bypassed_url = client.post(
-        "https://try2link.com/links/go", headers=headers, data=data
-    )
-    return bypassed_url.json()["url"]
-
-
 def try2link_scrape(url):
     client = requests.Session()
     h = {
@@ -93,7 +72,7 @@ def try2link_scrape(url):
     }
     res = client.get(url, cookies={}, headers=h)
     url = "https://try2link.com/" + re.findall("try2link\.com\/(.*?) ", res.text)[0]
-    res2 = try2link_bypass(url)
+    res2 = try2link(url)
     return res2
 
 
@@ -377,12 +356,11 @@ def taemovies_scrape(url):
     url = url + "/" if url[-1] != "/" else url
     res = client.get(url, allow_redirects=True)
     soup = BeautifulSoup(res.content, "html.parser")
-    x = soup.select('a[href^="https://shortingly.me"]')
-    for a in x:
-        gd_urls.append(a["href"])
     rslt += "Gdrive Links :<br><br>"
-    for gd in gd_urls:
-        rslt += f"• {gd}<br>"
+    for a in soup.find_all("a"):
+        c = a.get("href")
+        if c and "shortingly" in c:
+             rslt += f"• {c}<br>"
     rslt += "<br><br><b><u>NOTE:</u></b><i>The GDrive Links are actually Shortingly AdLinks. Bypass them manually</i>"
     tlg_url = telegraph_paste(rslt)
     return tlg_url
@@ -395,14 +373,15 @@ def teleguflix_scrape(url):
     url = url + "/" if url[-1] != "/" else url
     res = client.get(url, allow_redirects=True)
     soup = BeautifulSoup(res.content, "html.parser")
-    x = soup.select('a[href^="https://shortingly.me"]')
-    for a in x:
-        gd_urls.append(a["href"])
-    rslt += "Gdrive Links :<br><br>"
-    for gd in gd_urls:
-        rslt += f"• {gd}<br>"
-    rslt += "<br><br><b><u>NOTE:</u></b><i>The GDrive Links are actually Shortingly AdLinks. Bypass them manually</i>"
-    tlg_url = telegraph_paste(rslt)
+    rslt += "Links :<br><br>"
+    for a in soup.find_all("a"):
+        c = a.get("href")
+        if c and "gdtot" in c:
+            t = client.get(c).text
+            soupt = BeautifulSoup(t, "html.parser")
+            title = soupt.title
+            gd_txt += f"• <code>{(title.text).replace('GDToT | ' , '')}</code>\n{c}<br>"
+    tlg_url = telegraph_paste(gd_txt)
     return tlg_url
 
 

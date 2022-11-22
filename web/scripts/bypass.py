@@ -76,7 +76,7 @@ def ez4short(url):
     h = {"referer": ref}
     resp = client.get(url, headers=h)
     soup = BeautifulSoup(resp.content, "html.parser")
-    inputs = soup.find_all("input")
+    inputs = soup.find(id="go-link").find_all(name="input")
     data = {input.get("name"): input.get("value") for input in inputs}
     h = {"x-requested-with": "XMLHttpRequest"}
     time.sleep(8)
@@ -588,6 +588,28 @@ def sirigan(url):
         except BaseException:
             break
     return url.split("url=")[-1]
+
+
+def try2link(url):
+    client = requests.Session()
+    dom = "https://try2link.com"
+    ref = "https://newforex.online/"
+    url = url[:-1] if url[-1] == "/" else url
+    params = (("d", int(time.time()) + (60 * 4)),)
+    r = client.get(url, params=params, headers={"Referer": ref})
+    soup = BeautifulSoup(r.text, "html.parser")
+    inputs = soup.find(id="go-link").find_all(name="input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    time.sleep(7)
+    headers = {
+        "Host": "try2link.com",
+        "X-Requested-With": dom,
+        "Origin": "https://try2link.com",
+        "Referer": url,
+    }
+    des_url = client.post(f"{dom}/links/go", headers=headers, data=data).json()["url"]
+    des_url = des_url.replace(" ", "%20")
+    return des_url
 
 
 def thinfi(url):

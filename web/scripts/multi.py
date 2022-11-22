@@ -47,6 +47,8 @@ def all_in_one(url):
         res = krownlinks(url)
     elif "shortingly." in url:
         res = shortingly(url)
+    elif "try2link." in url:
+        res = try2link(url)
     elif "tnlink." in url:
         res = tnlink(url)
     elif "xpshort." in url:
