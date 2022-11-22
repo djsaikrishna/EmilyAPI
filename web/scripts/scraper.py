@@ -350,7 +350,6 @@ def magnet_scrape(url):
 
 
 def taemovies_scrape(url):
-    gd_urls = []
     client = requests.Session()
     rslt = f"User URL : {url}<br><br>"
     url = url + "/" if url[-1] != "/" else url
@@ -360,14 +359,13 @@ def taemovies_scrape(url):
     for a in soup.find_all("a"):
         c = a.get("href")
         if c and "shortingly" in c:
-             rslt += f"• {c}<br>"
+            rslt += f"• {c}<br>"
     rslt += "<br><br><b><u>NOTE:</u></b><i>The GDrive Links are actually Shortingly AdLinks. Bypass them manually</i>"
     tlg_url = telegraph_paste(rslt)
     return tlg_url
 
 
 def teleguflix_scrape(url):
-    gd_urls = []
     client = requests.Session()
     rslt = f"User URL : {url}<br><br>"
     url = url + "/" if url[-1] != "/" else url
