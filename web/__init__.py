@@ -39,15 +39,14 @@ from web.scripts.misc import (dictionary_search, github_search, google_search,
                               urban_search, wiki_search, xda_search,
                               youtube_search)
 from web.scripts.pasting import telegraph_paste
-from web.scripts.scraper import (atishmkv_scrape, cinevez_scrape,
-                                 cinevood_scrape, filecrypt_scrape,
-                                 htpmovies_scrape, igggames_scrape,
-                                 index_scrape, magnet_scrape,
+from web.scripts.scraper import (animeremux_scrape, atishmkv_scrape,
+                                 cinevez_scrape, cinevood_scrape,
+                                 filecrypt_scrape, htpmovies_scrape,
+                                 igggames_scrape, index_scrape, magnet_scrape,
                                  moviesdrama_scrape, olamovies_scrape,
                                  privatemoviez_scrape, psa_scrape,
                                  sharespark_scrape, taemovies_scrape,
-                                 teleguflix_scrape, toonworld4all_scrape,
-                                 animeremux_scrape)
+                                 teleguflix_scrape, toonworld4all_scrape)
 from web.scripts.shorten import (bitly_shorten, clckru_shorten, clilp_shorten,
                                  dagd_shorten, isgd_shorten, osdb_shorten,
                                  tinyurl_shorten, ttm_shorten, vgd_shorten)

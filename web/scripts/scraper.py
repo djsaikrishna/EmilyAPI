@@ -298,12 +298,13 @@ def bypassBluemediafiles(url, torrent=False):
             furl = furl.replace("mega.nz/%23!", "mega.nz/file/").replace("!", "#")
     return furl
 
+
 def animeremux_scrape(url):
     rslt = f"User URL : {url}<br><br>"
     rslt += "Links :<br><br>"
     client = requests.session()
     r = client.get(url).text
-    soup = BeautifulSoup (r, "html.parser")
+    soup = BeautifulSoup(r, "html.parser")
     for a in soup.find_all("a"):
         c = a.get("href")
         if "appdrive." in c:
