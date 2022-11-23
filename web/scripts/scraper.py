@@ -229,7 +229,7 @@ def olamovies_scrape(url):
             temp_res = rocklinks(ele)
             final.append(temp_res)
         elif "try2link." in ele:
-            temp_res = try2link_bypass(ele)
+            temp_res = try2link(ele)
             final.append(temp_res)
         else:
             final.append(ele)
@@ -297,6 +297,23 @@ def bypassBluemediafiles(url, torrent=False):
         if "mega.nz" in furl:
             furl = furl.replace("mega.nz/%23!", "mega.nz/file/").replace("!", "#")
     return furl
+
+def animeremux_scrape(url):
+    rslt = f"User URL : {url}<br><br>"
+    rslt += "Links :<br><br>"
+    client = requests.session()
+    r = client.get(url).text
+    soup = BeautifulSoup (r, "html.parser")
+    for a in soup.find_all("a"):
+        c = a.get("href")
+        if "appdrive." in c:
+            x = c.split("url=")[-1]
+            t = client.get(x).text
+            soupt = BeautifulSoup(t, "html.parser")
+            title = soupt.title
+            rslt += f"{(title.text).replace('GDToT | ' , '')}<br>{x}<br><br>"
+    tlg_url = telegraph_paste(rslt)
+    return tlg_url
 
 
 def igggames_scrape(url):
@@ -378,8 +395,8 @@ def teleguflix_scrape(url):
             t = client.get(c).text
             soupt = BeautifulSoup(t, "html.parser")
             title = soupt.title
-            gd_txt += f"• <code>{(title.text).replace('GDToT | ' , '')}</code>\n{c}<br>"
-    tlg_url = telegraph_paste(gd_txt)
+            rslt += f"• <code>{(title.text).replace('GDToT | ' , '')}</code><br>{c}<br>"
+    tlg_url = telegraph_paste(rslt)
     return tlg_url
 
 

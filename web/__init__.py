@@ -46,7 +46,8 @@ from web.scripts.scraper import (atishmkv_scrape, cinevez_scrape,
                                  moviesdrama_scrape, olamovies_scrape,
                                  privatemoviez_scrape, psa_scrape,
                                  sharespark_scrape, taemovies_scrape,
-                                 teleguflix_scrape, toonworld4all_scrape)
+                                 teleguflix_scrape, toonworld4all_scrape,
+                                 animeremux_scrape)
 from web.scripts.shorten import (bitly_shorten, clckru_shorten, clilp_shorten,
                                  dagd_shorten, isgd_shorten, osdb_shorten,
                                  tinyurl_shorten, ttm_shorten, vgd_shorten)
@@ -161,6 +162,7 @@ SCRAPE_SUP_SITES = {
     "psa_scrap": psa_scrape,
     "olamovies_scrap": olamovies_scrape,
     "igggames_scrap": igggames_scrape,
+    "animeremux_scrap": animeremux_scrape,
     "magnet_scrap": magnet_scrape,
     "taemovies_scrap": taemovies_scrape,
     "teleguflix_scrap": teleguflix_scrape,

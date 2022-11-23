@@ -166,6 +166,8 @@ def all_in_one(url):
         res = htpmovies(url)
     elif "igg-games." in url:
         res = igggames_scrape(url)
+    elif "animeremux." in url:
+        res = animeremux_scrape(url)
     elif "moviesdrama." in url:
         res = moviesdrama_scrape(url)
     elif "olamovies." in url:

@@ -256,7 +256,7 @@ def hypershort(url):
 
 def krownlinks(url):
     client = requests.session()
-    dom = "https://go.exozed.com"
+    dom = "https://go.gyanitheme.com"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
     final_url = f"{dom}/{code}"

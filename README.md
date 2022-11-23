@@ -222,6 +222,7 @@ C. Docker Compose
 | 14.   | TaeMovies Site Scraper | `taemovies_scrap`    |
 | 15.   | TeleguFlix Scraper     | `teleguflix_scrap`   |
 | 16.   | Toonworld4all Scraper  | `toonworld4all_scrap`|
+| 16.   | AnimeRemux Scraper     | `animeremux_scrap`   |
 
 
 ## Sample Requests
