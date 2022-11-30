@@ -704,38 +704,34 @@ def match_pattern(regex, url):
 
 async def vidstream(url):
     client = requests.Session()
-    match, c = match_pattern(re_exp['VIDSTREAM_RE'], url)
+    match, c = match_pattern(re_exp["VIDSTREAM_RE"], url)
     info_url = f"{c['scheme']}{c['host']}/info/{c['id']}"
-    h = {'referer': url}
+    h = {"referer": url}
     data = client.get(info_url, headers=h).json()
-    if 'media' in data:
-        return data['media']['sources'][-1]['file']
+    if "media" in data:
+        return data["media"]["sources"][-1]["file"]
     return None
 
 
 async def mycloud(url):
     client = requests.Session()
-    match, c = match_pattern(re_exp['MCLOUD_RE'], url)
+    match, c = match_pattern(re_exp["MCLOUD_RE"], url)
     info_url = f"{c['scheme']}{c['host']}/info/{c['id']}"
-    h = {'referer': url}
+    h = {"referer": url}
     data = client.get(info_url, headers=h).json()
-    if 'media' in data:
-        return data['media']['sources'][-1]['file']
+    if "media" in data:
+        return data["media"]["sources"][-1]["file"]
     return None
 
 
 async def videovard(url):  # excluding ref headers
     client = requests.Session()
-    match, c = match_pattern(re_exp['VIDEOVARD_RE'], url)
+    match, c = match_pattern(re_exp["VIDEOVARD_RE"], url)
     url = f"https://{c['host']}/api/make/hash/{c['id']}"
     res = client.get(url).json()
-    hash = res['hash']
+    hash = res["hash"]
     url = f"https://{c['host']}/api/player/setup"
-    data = {
-        'cmd': 'get_stream',
-        'file_code': c['id'],
-        'hash': hash
-    }
+    data = {"cmd": "get_stream", "file_code": c["id"], "hash": hash}
     res = client.post(url, data=data).json()
-    url = res['src']
+    url = res["src"]
     return url

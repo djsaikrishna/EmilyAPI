@@ -1,13 +1,11 @@
 import re
 
 re_exp = {
-    'VIDSTREAM_RE': r"(?P<scheme>https?://)?(?P<host>(?:\S+.)?(?:vidstreamz|vidstream|vizcloud2)\.(?:online|pro))/(?:embed|e)/(?P<id>[A-Z0-9]+)",
-
-    'MCLOUD_RE': r"(?P<scheme>https?://)?(?P<host>(?:\S+.)?mcloud\.to)/(?:embed|e)/(?P<id>[a-zA-Z0-9]+)",
-
-    'VIDEOVARD_RE': r"(?P<scheme>https?://)?(?P<host>(?:\S+.)?videovard\.(?:sx|to))/[ved]/(?P<id>[a-zA-Z0-9]+)",
-
+    "VIDSTREAM_RE": r"(?P<scheme>https?://)?(?P<host>(?:\S+.)?(?:vidstreamz|vidstream|vizcloud2)\.(?:online|pro))/(?:embed|e)/(?P<id>[A-Z0-9]+)",
+    "MCLOUD_RE": r"(?P<scheme>https?://)?(?P<host>(?:\S+.)?mcloud\.to)/(?:embed|e)/(?P<id>[a-zA-Z0-9]+)",
+    "VIDEOVARD_RE": r"(?P<scheme>https?://)?(?P<host>(?:\S+.)?videovard\.(?:sx|to))/[ved]/(?P<id>[a-zA-Z0-9]+)",
 }
+
 
 def is_a_url(url: str):
     url = re.match(

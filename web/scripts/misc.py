@@ -1,9 +1,9 @@
 import os
 import re
-import requests
-import jikanpy
-import wikipedia
 
+import jikanpy
+import requests
+import wikipedia
 from bs4 import BeautifulSoup
 from textblob import TextBlob
 
@@ -28,7 +28,9 @@ async def xda_search(query):
         hre = on.find_all("div", "item_content")[0].find("h4").find("a")["href"]
         desc = on.find_all("div", "item_meta clearfix")[0].text
         text = f"[{title}]({hre})"
-        search_res += f"Title:{title}\nDescription:{desc}\nURL:{hre}\nThumbnail:{thumb}\n{text}"
+        search_res += (
+            f"Title:{title}\nDescription:{desc}\nURL:{hre}\nThumbnail:{thumb}\n{text}"
+        )
     return search_res
 
 
@@ -75,7 +77,9 @@ async def lyrics_search(query):
 
 
 async def npm_search(query):
-    srch_url = f"https://registry.npmjs.com/-/v1/search?text={query.replace(' ','+')}&size=7"
+    srch_url = (
+        f"https://registry.npmjs.com/-/v1/search?text={query.replace(' ','+')}&size=7"
+    )
     data = requests.get(srch_url)
     search_res = ""
     for obj in data["objects"]:
@@ -86,7 +90,9 @@ async def npm_search(query):
         text = f"**[{title}]({package['links'].get('homepage', '')})\n{package['description']}**\n"
         text2 = f"**Version:** `{package['version']}`\n"
         text3 = f"**Keywords:** `{','.join(keys)}`"
-        search_res += f"Title:{title}\nURL:{url}\nKeywords:{keys}\n\n{text}{text2}{text3}"
+        search_res += (
+            f"Title:{title}\nURL:{url}\nKeywords:{keys}\n\n{text}{text2}{text3}"
+        )
     return search_res
 
 
@@ -244,5 +250,7 @@ async def omgubuntu_search(query):
         title = tit.text.strip()
         desc = con.find("p", "layout__description").text.strip()
         text = f"[{title.strip()}]({url})\n\n{desc}"
-        search_res += f"Title:{title}\nImage:{src}\nDescription:{desc}\nURL:{url}\n{text}"
+        search_res += (
+            f"Title:{title}\nImage:{src}\nDescription:{desc}\nURL:{url}\n{text}"
+        )
     return search_res

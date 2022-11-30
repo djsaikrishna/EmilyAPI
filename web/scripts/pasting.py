@@ -1,4 +1,5 @@
 import re
+
 import requests
 
 from web import LOGGER
@@ -65,7 +66,7 @@ async def rentry_paste(text):
         token = i.group(1)
         break
     data = dict(csrfmiddlewaretoken=token, text=text)
-    headers=dict(Referer=base_url)
+    headers = dict(Referer=base_url)
     pst_url = client.post(base_url, data=data, headers=headers).url
     return pst_url
 

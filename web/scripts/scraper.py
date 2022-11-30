@@ -394,7 +394,7 @@ async def teleguflix_scrape(url):
     soup = BeautifulSoup(res.content, "html.parser")
     links = soup.select('a[href*="gdtot"]')
     for no, link in enumerate(links, start=1):
-        gdlk = link['href']
+        gdlk = link["href"]
         t = client.get(gdlk)
         soupt = BeautifulSoup(t.text, "html.parser")
         title = soupt.select('meta[property^="og:description"]')
