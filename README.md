@@ -99,6 +99,7 @@ C. Docker Compose
 | 28.   | Dulink          | `dulink`      |
 | 29.   | Ez4Short        | `ez4short`    |
 | 30.   | Try2Link        | `try2link`    |
+| 30.   | URLsOpen        | `urlsopen`    |
 
 ## Available Direct-Link Generators
 
@@ -149,6 +150,9 @@ C. Docker Compose
 | 41.   | UploadBaz       | `uploadbaz`       |
 | 42.   | Uppit           | `uppit`           |
 | 43.   | UsersCloud      | `userscloud`      |
+| 44.   | MyCloud         | `mycloud`         |
+| 45.   | Videovard       | `videovard`       |
+| 46.   | Vidstream       | `vidstream`       |
 
 ## Available Misc Services
 
@@ -175,6 +179,10 @@ C. Docker Compose
 | 17.   | TMDB Search          | `tmdb_search`          |
 | 18.   | Urban Search         | `urban_search`         |
 | 19.   | Unsplash Search      | `unsplash_search`      |
+| 20.   | Koo Search           | `koo_search`           |
+| 21.   | AnimeChar Search     | `animechar_search`     | 
+| 22.   | Winget Search        | `winget_search`        |
+| 23.   | OmgUbuntu Search     | `omgubuntu_search`     |
 
 ## Available Pasting Services
 
@@ -183,6 +191,13 @@ C. Docker Compose
 | S.No. | Paste Service |     Type         |
 |-------|---------------|------------------|
 | 1.    | Telegra.ph    | `telegraph_paste`|
+| 2.    | KatBin        | `katbin_paste`   |
+| 3.    | NekoBin       | `nekobin_paste`  |
+| 4.    | HasteBin      | `hastebin_paste` |
+| 5.    | Rentry        | `rentry_paste`   |
+| 6.    | Pastingga     | `pastingga_paste`|
+| 7.    | PastyLus      | `pastylus_paste` |
+| 8.    | SpaceBin      | `spacebin_paste` |
 
 ## Available Link Shorteners
 

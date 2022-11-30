@@ -13,7 +13,7 @@ from web.helpers.regex import *
 from web.scripts.pasting import telegraph_paste
 
 
-def androiddatahost(url):
+async def androiddatahost(url):
     link = re.findall(r"\bhttps?://androiddatahost\.com\S+", url)[0]
     url3 = BeautifulSoup(requests.get(link).content, "html.parser")
     fin = url3.find("div", {"download2"})
@@ -22,7 +22,7 @@ def androiddatahost(url):
     return dl_url
 
 
-def bunkr_cyber(url):
+async def bunkr_cyber(url):
     count = 1
     dl_msg = ""
     resp = requests.get(url)
@@ -49,17 +49,17 @@ def bunkr_cyber(url):
             count += 1
     fld_msg = f"<b><i>Your provided {link_type} link is of Folder and I've Found {count - 1} files in the Folder.</i></b><br>"
     fld_msg += f"<i>I've generated Direct Links for all the files.</i><br><br>"
-    tlg_url = telegraph_paste(fld_msg + dl_msg)
+    tlg_url = await telegraph_paste(fld_msg + dl_msg)
     return tlg_url
 
 
-def anonfiles(url):
+async def anonfiles(url):
     soup = BeautifulSoup(requests.get(url).content, "html.parser")
     if dlurl := soup.find(id="download-url"):
         return dlurl["href"]
 
 
-def antfiles(url):
+async def antfiles(url):
     soup = BeautifulSoup(requests.get(url).content, "html.parser")
     parsed_url = urllib.parse.urlparse(url)
     if a := soup.find(class_="main-btn", href=True):
@@ -67,7 +67,7 @@ def antfiles(url):
         return final_url
 
 
-def artstation(url):
+async def artstation(url):
     url = url.split("/")[-1]
     client = cloudscraper.create_scraper(interpreter="nodejs", allow_brotli=False)
     h = {
@@ -81,14 +81,14 @@ def artstation(url):
     return dl_url
 
 
-def dropbox(url):
+async def dropbox(url):
     if "dropbox.com/s/" in url:
         return url.replace("dropbox.com", "dl.dropboxusercontent.com")
     else:
         return url.replace("?dl=0", "?dl=1")
 
 
-def fembed(url):
+async def fembed(url):
     url = url[:-1] if url[-1] == "/" else url
     TOKEN = url.split("/")[-1]
     API = "https://fembed-hd.com/api/source/"
@@ -98,11 +98,11 @@ def fembed(url):
     return dl_url
 
 
-def filesIm(url):
+async def filesIm(url):
     return Bypass().bypass_filesIm(url)
 
 
-def gdbot(url):
+async def gdbot(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
     resp = client.get(url)
     gdtot_url = re.findall('mb-2" href="(.*?)" target="_blank"', resp.text)
@@ -115,12 +115,12 @@ def gdbot(url):
     return res
 
 
-def github(url):
+async def github(url):
     download = requests.get(url, stream=True, allow_redirects=False)
     return download.headers["location"]
 
 
-def gofile(url):
+async def gofile(url):
     api_uri = "https://api.gofile.io"
     client = cloudscraper.create_scraper(allow_brotli=False)
     res = client.get(f"{api_uri}/createAccount").json()
@@ -138,7 +138,7 @@ def gofile(url):
         return dl_url
 
 
-def hxfile(url):
+async def hxfile(url):
     url = url[:-1] if url[-1] == "/" else url
     token = url.split("/")[-1]
     client = requests.Session()
@@ -162,7 +162,7 @@ def hxfile(url):
         return unique["href"]
 
 
-def krakenfiles(url):
+async def krakenfiles(url):
     page_resp = requests.session().get(url)
     soup = BeautifulSoup(page_resp.text, "lxml")
     token = soup.find("input", id="dl-token")["value"]
@@ -188,15 +188,15 @@ def krakenfiles(url):
     return dl_url
 
 
-def letsupload(url):
+async def letsupload(url):
     return Bypass().bypass_url(url)
 
 
-def linkpoi(url):
+async def linkpoi(url):
     return Bypass().bypass_linkpoi(url)
 
 
-def mdisk(url):
+async def mdisk(url):
     check = re.findall(r"\bhttps?://.*mdisk\S+", url)
     link = check[0]
     url = link.split("/")[-1]
@@ -211,7 +211,7 @@ def mdisk(url):
     return dl_url
 
 
-def mdisk_mpd(url):
+async def mdisk_mpd(url):
     check = re.findall(r"\bhttps?://.*mdisk\S+", url)
     link = check[0]
     url = link.split("/")[-1]
@@ -226,7 +226,7 @@ def mdisk_mpd(url):
     return dl_url
 
 
-def mediafire(url):
+async def mediafire(url):
     page = BeautifulSoup(requests.get(url).content, "lxml")
     info = page.find("a", {"aria-label": "Download file"})
     dl_url = info.get("href")
@@ -234,7 +234,7 @@ def mediafire(url):
     return dl_url
 
 
-def megaup(url):
+async def megaup(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
     resp = client.get(url)
     data = (
@@ -254,11 +254,11 @@ def megaup(url):
         return des_url
 
 
-def mirrored(url):
+async def mirrored(url):
     return Bypass().bypass_mirrored(url)
 
 
-def mp4upload(url):
+async def mp4upload(url):
     url = url[:-1] if url[-1] == "/" else url
     headers = {"referer": "https://mp4upload.com"}
     token = url.split("/")[-1]
@@ -276,7 +276,7 @@ def mp4upload(url):
     return des_url
 
 
-def osdn(url):
+async def osdn(url):
     link = re.findall(r"\bhttps?://.*osdn\.net\S+", url)[0]
     page = BeautifulSoup(requests.get(link, allow_redirects=True).content, "lxml")
     info = page.find("a", {"class": "mirror_link"})
@@ -289,7 +289,7 @@ def osdn(url):
     return urls[0]
 
 
-def pandafile(url):
+async def pandafile(url):
     id_p = re.compile("pandafiles.com/(.+?)/")
     headers = {
         "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:93.0) Gecko/20100101 Firefox/93.0",
@@ -325,12 +325,12 @@ def pandafile(url):
         return dl_url
 
 
-def pixeldrain(url):
+async def pixeldrain(url):
     url = url.strip("/ ")
     file_id = url.split("/")[-1]
     if url.split("/")[-2] == "l":
         info_link = f"https://pixeldrain.com/api/list/{file_id}"
-        dl_link = f"https://pixeldrain.com/api/list/{file_id}/zip"
+        dl_link = f"{info_link}/zip"
     else:
         info_link = f"https://pixeldrain.com/api/file/{file_id}/info"
         dl_link = f"https://pixeldrain.com/api/file/{file_id}"
@@ -338,7 +338,7 @@ def pixeldrain(url):
     return dl_link
 
 
-def pixl(url):
+async def pixl(url):
     resp = requests.get(url)
     currentpage = 1
     settotalimgs = True
@@ -368,15 +368,15 @@ def pixl(url):
     currentpage += 1
     fld_msg = f"<b><i>Your provided Pixl.is link is of Folder and I've Found {count - 1} files in the folder.</i></b><br>"
     fld_msg += f"<i>I've generated Direct Links for all the files.</i><br><br>"
-    tlg_url = telegraph_paste(fld_msg + ddl_msg)
+    tlg_url = await telegraph_paste(fld_msg + ddl_msg)
     return tlg_url
 
 
-def reupload(url):
+async def reupload(url):
     return Bypass().bypass_reupload(url)
 
 
-def sbembed(url):
+async def sbembed(url):
     dl_url = Bypass().bypass_sbembed(url)
     count = len(dl_url)
     lst_link = [dl_url[i] for i in dl_url]
@@ -385,7 +385,7 @@ def sbembed(url):
     return dl_url
 
 
-def is_sendcm_folder_link(url: str):
+async def is_sendcm_folder_link(url: str):
     return (
         "https://send.cm/s/" in url
         or "https://send.cm/?sort" in url
@@ -394,7 +394,7 @@ def is_sendcm_folder_link(url: str):
     )
 
 
-def sendcm(url):
+async def sendcm(url):
     base_url = "https://send.cm/"
     client = cloudscraper.create_scraper(allow_brotli=False)
     hs = {
@@ -438,7 +438,7 @@ def sendcm(url):
                         done = True
                     else:
                         url = base_url + next_page["href"]
-        tlg_url = telegraph_paste(msg)
+        tlg_url = await telegraph_paste(msg)
         return tlg_url
     else:
         resp = client.get(url)
@@ -451,11 +451,11 @@ def sendcm(url):
         dl_url = resp2.headers["Location"]
         dl_url = dl_url.replace(" ", "%20")
         msg = f"<b>File Name:</b> {file_name}<br><b>File Link:</b> <code>{url}</code><br><b>Download Link:</b> <code>{dl_url}</code><br>"
-        tlg_url = telegraph_paste(msg)
+        tlg_url = await telegraph_paste(msg)
         return tlg_url
 
 
-def solidfiles(url):
+async def solidfiles(url):
     headers = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1985.125 Safari/537.36"
     }
@@ -464,7 +464,7 @@ def solidfiles(url):
     return json.loads(mainOptions)["downloadUrl"]
 
 
-def sfile(url):
+async def sfile(url):
     headers = {
         "User-Agent": "Mozilla/5.0 (Linux; Android 8.0.1; SM-G532G Build/MMB29T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3239.83 Mobile Safari/537.36"
     }
@@ -474,7 +474,7 @@ def sfile(url):
     return dl_url
 
 
-def sourceforge(url):
+async def sourceforge(url):
     link = re.findall(r"\bhttps?://sourceforge\.net\S+", url)[0]
     file_path = re.findall(r"files(.*)/download", link)[0]
     project = re.findall(r"projects?/(.*?)/files", link)[0]
@@ -488,7 +488,7 @@ def sourceforge(url):
         return f'https://{mirror["id"]}.dl.sourceforge.net/project/{project}/{file_path}?viasf=1'
 
 
-def streamsb(url):
+async def streamsb(url):
     def rand_str():
         array = "abcdefghijklmnopqrstuvwqyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
         return "".join([random.choice(array) for _ in range(12)])
@@ -515,7 +515,7 @@ def streamsb(url):
     return dl_url
 
 
-def streamlare(url):
+async def streamlare(url):
     CONTENT_ID = re.compile(r"/[ve]/([^?#&/]+)")
     API_LINK = "https://sltube.org/api/video/download/get"
     user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4136.7 Safari/537.36"
@@ -539,14 +539,14 @@ def streamlare(url):
     return dl_url
 
 
-def streamtape(url):
+async def streamtape(url):
     response = requests.get(url)
     if videolink := re.findall(r"document.*((?=id\=)[^\"']+)", response.text):
         nexturl = "https://streamtape.com/get_video?" + videolink[-1]
         return nexturl
 
 
-def uploadbaz(url):
+async def uploadbaz(url):
     url = url[:-1] if url[-1] == "/" else url
     token = url.split("/")[-1]
     client = requests.Session()
@@ -566,13 +566,13 @@ def uploadbaz(url):
     return response.headers["Location"]
 
 
-def uploadee(url):
+async def uploadee(url):
     soup = BeautifulSoup(requests.get(url).content, "lxml")
     sa = soup.find("a", attrs={"id": "d_l"})
     return sa["href"]
 
 
-def uppit(url):
+async def uppit(url):
     url = url[:-1] if url[-1] == "/" else url
     token = url.split("/")[-1]
     client = requests.Session()
@@ -596,7 +596,7 @@ def uppit(url):
     return download_url
 
 
-def userscloud(url):
+async def userscloud(url):
     url = url[:-1] if url[-1] == "/" else url
     token = url.split("/")[-1]
     client = requests.Session()
@@ -616,11 +616,11 @@ def userscloud(url):
     return response.headers["Location"]
 
 
-def uservideo(url):
+async def uservideo(url):
     return Bypass().bypass_uservideo(url)
 
 
-def wetransfer(url):
+async def wetransfer(url):
     if url.startswith("https://we.tl/"):
         r = requests.head(url, allow_redirects=True)
         url = r.url
@@ -651,7 +651,7 @@ def wetransfer(url):
     return dl_url
 
 
-def yandex_disk(url):
+async def yandex_disk(url):
     link = re.findall(
         r"\b(https?://(yadi.sk|disk.yandex.com|disk.yandex.ru|disk.yandex.com.tr|disk.yandex.com.ru)\S+)",
         url,
@@ -662,7 +662,7 @@ def yandex_disk(url):
     return dl_url
 
 
-def zippyshare(url):
+async def zippyshare(url):
     client = requests.Session()
     response = client.get(url)
     if dlbutton := re.search(
@@ -693,3 +693,49 @@ def zippyshare(url):
             return re.search(r"(^https://www\d+.zippyshare.com)", response.url).group(
                 1
             ) + "".join([file[0], str(a + (divider % int(b))), file[1]])
+
+
+def match_pattern(regex, url):
+    pattern = re.compile(regex)
+    match = pattern.search(url)
+    c = match.groupdict()
+    return match, c
+
+
+async def vidstream(url):
+    client = requests.Session()
+    match, c = match_pattern(re_exp['VIDSTREAM_RE'], url)
+    info_url = f"{c['scheme']}{c['host']}/info/{c['id']}"
+    h = {'referer': url}
+    data = client.get(info_url, headers=h).json()
+    if 'media' in data:
+        return data['media']['sources'][-1]['file']
+    return None
+
+
+async def mycloud(url):
+    client = requests.Session()
+    match, c = match_pattern(re_exp['MCLOUD_RE'], url)
+    info_url = f"{c['scheme']}{c['host']}/info/{c['id']}"
+    h = {'referer': url}
+    data = client.get(info_url, headers=h).json()
+    if 'media' in data:
+        return data['media']['sources'][-1]['file']
+    return None
+
+
+async def videovard(url):  # excluding ref headers
+    client = requests.Session()
+    match, c = match_pattern(re_exp['VIDEOVARD_RE'], url)
+    url = f"https://{c['host']}/api/make/hash/{c['id']}"
+    res = client.get(url).json()
+    hash = res['hash']
+    url = f"https://{c['host']}/api/player/setup"
+    data = {
+        'cmd': 'get_stream',
+        'file_code': c['id'],
+        'hash': hash
+    }
+    res = client.post(url, data=data).json()
+    url = res['src']
+    return url

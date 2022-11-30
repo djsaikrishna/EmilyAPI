@@ -6,143 +6,150 @@ from web.scripts.direct import *
 from web.scripts.scraper import *
 
 
-def all_in_one(url):
+async def all_in_one(url):
     is_artstation = is_artstation_link(url)
     if "droplink." in url or "droplinks." in url:
-        res = droplink(url)
+        res = await droplink(url)
     elif "dulink." in url:
-        res = dulink(url)
+        res = await dulink(url)
     elif "gplink." in url or "gplinks." in url:
-        res = gplinks(url)
+        res = await gplinks(url)
     elif any(x in url for x in linkvertise_list):
-        res = linkvertise(url)
+        res = await linkvertise(url)
     elif any(x in url for x in adfly_list):
-        res = adfly(url)
+        res = await adfly(url)
     elif "htpmovies." in url and "/exit.php?url" in url:
-        res = htpmovies(url)
+        res = await htpmovies(url)
     elif "privatemoviez." in url and "/secret?data=" in url:
-        res = privatemoviez(url)
+        res = await privatemoviez(url)
     elif "hypershort." in url:
-        res = hypershort(url)
+        res = await hypershort(url)
     elif "ez4short." in url:
-        res = ez4short(url)
+        res = await ez4short(url)
     elif "sirigan.my.id" in url:
-        res = sirigan(url)
+        res = await sirigan(url)
     elif "ouo.io" in url or "ouo.press" in url:
-        res = ouo(url)
+        res = await ouo(url)
     elif any(x in url for x in shst_list):
-        res = shorte(url)
+        res = await shorte(url)
     elif "rocklinks." in url:
-        res = rocklinks(url)
+        res = await rocklinks(url)
     elif ("gtlinks." or "loan.kinemaster.cc/?token=" or "theforyou.in/?token=") in url:
         url = url.replace("&m=1", "")
-        res = gtlinks(url)
+        res = await gtlinks(url)
     elif "gyanilinks." in url:
-        res = gyanilinks(url)
+        res = await gyanilinks(url)
     elif "shareus." in url:
-        res = shareus(url)
+        res = await shareus(url)
     elif "short2url." in url:
-        res = short2url(url)
+        res = await short2url(url)
     elif "krownlinks." in url:
-        res = krownlinks(url)
+        res = await krownlinks(url)
     elif "shortingly." in url:
-        res = shortingly(url)
+        res = await shortingly(url)
     elif "try2link." in url:
-        res = try2link(url)
+        res = await try2link(url)
     elif "tnlink." in url:
-        res = tnlink(url)
+        res = await tnlink(url)
+    elif "urlsopen." in url:
+        res = await urlsopen(url)
     elif "xpshort." in url:
-        res = xpshort(url)
+        res = await xpshort(url)
     elif "adrinolinks." in url:
-        res = adrinolinks(url)
+        res = await adrinolinks(url)
     elif "pkin." in url:
-        res = pkin(url)
+        res = await pkin(url)
     elif "shortly." in url:
-        res = shortly(url)
+        res = await shortly(url)
     elif "thinfi." in url:
-        res = thinfi(url)
+        res = await thinfi(url)
     elif is_artstation:
-        res = artstation(url)
+        res = await artstation(url)
     elif "mdisk." in url:
-        res = mdisk(url)
-        mdisk_mpd(url)
+        res = await mdisk(url)
     elif "wetransfer." in url or "we.tl" in url:
-        res = wetransfer(url)
+        res = await wetransfer(url)
     elif "gdbot." in url:
-        res = gdbot(url)
+        res = await gdbot(url)
     elif "gofile." in url:
-        # res = gofile(url)
-        res = url  # Temporary Solution
+        # res = await gofile(url)
+        res = await url  # Temporary Solution
     elif "megaup." in url:
-        res = megaup(url)
+        res = await megaup(url)
+    elif "mcloud." in url:
+        res = await mycloud(url)
     elif "sfile.mobi" in url:
-        res = sfile(url)
+        res = await sfile(url)
     elif any(x in url for x in yandisk_list):
-        res = yandex_disk(url)
+        res = await yandex_disk(url)
     elif "osdn." in url:
-        res = osdn(url)
+        res = await osdn(url)
     elif "github.com" in url:
-        res = github(url)
+        res = await github(url)
     elif "mediafire." in url:
-        res = mediafire(url)
+        res = await mediafire(url)
     elif "zippyshare." in url:
-        res = zippyshare(url)
+        res = await zippyshare(url)
     elif "hxfile." in url:
-        res = hxfile(url)
+        res = await hxfile(url)
     elif "files.im" in url:
-        res = filesIm(url)
+        res = await filesIm(url)
     elif "anonfiles." in url:
-        res = anonfiles(url)
+        res = await anonfiles(url)
     elif "letsupload." in url:
-        res = letsupload(url)
+        res = await letsupload(url)
     elif "linkpoi." in url:
-        res = linkpoi(url)
+        res = await linkpoi(url)
     elif any(x in url for x in fmed_list):
-        res = fembed(url)
+        res = await fembed(url)
     elif any(x in url for x in sbembed_list):
-        res = sbembed(url)
+        res = await sbembed(url)
     elif "mirrored." in url:
-        res = mirrored(url)
+        res = await mirrored(url)
     elif "reupload." in url:
-        res = reupload(url)
+        res = await reupload(url)
     elif "uservideo." in url:
-        res = uservideo(url)
+        res = await uservideo(url)
+    elif "videovard." in url:
+        res = await videovard(url)
+    elif ("vidstreamz" or "vidstream" or "vizcloud2.") in url:
+        res = await vidstream(url)
     elif "antfiles." in url:
-        res = antfiles(url)
+        res = await antfiles(url)
     elif "streamtape." in url:
-        res = streamtape(url)
+        res = await streamtape(url)
     elif "sourceforge." in url:
-        res = sourceforge(url)
+        res = await sourceforge(url)
     elif "androidatahost." in url:
-        res = androiddatahost(url)
+        res = await androiddatahost(url)
     elif "krakenfiles." in url:
-        res = krakenfiles(url)
+        res = await krakenfiles(url)
     elif "dropbox." in url:
-        res = dropbox(url)
+        res = await dropbox(url)
     elif "pixeldrain." in url:
-        res = pixeldrain(url)
+        res = await pixeldrain(url)
     elif ("streamlare." or "sltube.") in url:
-        res = streamlare(url)
+        res = await streamlare(url)
     elif "pandafiles." in url:
-        res = pandafile(url)
+        res = await pandafile(url)
     elif "upload.ee" in url:
-        res = uploadee(url)
+        res = await uploadee(url)
     elif "solidfiles." in url:
-        res = solidfiles(url)
+        res = await solidfiles(url)
     elif "adrinolinks." in url:
-        res = adrinolinks(url)
+        res = await adrinolinks(url)
     elif "dropbox." in url:
-        res = dropbox(url)
+        res = await dropbox(url)
     elif "mp4upload." in url:
-        res = mp4upload(url)
+        res = await mp4upload(url)
     elif ("streamsb." or "watchsb.") in url:
-        res = streamsb(url)
+        res = await streamsb(url)
     elif "uploadbaz." in url:
-        res = uploadbaz(url)
+        res = await uploadbaz(url)
     elif "uppit." in url:
-        res = uppit(url)
+        res = await uppit(url)
     elif "userscloud." in url:
-        res = userscloud(url)
+        res = await userscloud(url)
     elif (
         "workers.dev" in url
         or "0:/" in url
@@ -153,37 +160,37 @@ def all_in_one(url):
         or "5:/" in url
         or "6:/" in url
     ):
-        res = index_scrape(url)
+        res = await index_scrape(url)
     elif "atishmkv." in url or "atish.mkv" in url:
-        res = atishmkv_scrape(url)
+        res = await atishmkv_scrape(url)
     elif "cinevez." in url:
-        res = cinevez_scrape(url)
+        res = await cinevez_scrape(url)
     elif "cinevood." in url:
-        res = cinevood_scrape(url)
+        res = await cinevood_scrape(url)
     elif "filecrypt." in url:
-        res = filecrypt_scrape(url)
+        res = await filecrypt_scrape(url)
     elif "htpmovies." in url and "/exit.php?url=" in url:
-        res = htpmovies(url)
+        res = await htpmovies(url)
     elif "igg-games." in url:
-        res = igggames_scrape(url)
+        res = await igggames_scrape(url)
     elif "animeremux." in url:
-        res = animeremux_scrape(url)
+        res = await animeremux_scrape(url)
     elif "moviesdrama." in url:
-        res = moviesdrama_scrape(url)
+        res = await moviesdrama_scrape(url)
     elif "olamovies." in url:
-        res = olamovies_scrape(url)
+        res = await olamovies_scrape(url)
     elif "psa." in url:
-        res = psa_scrape(url)
+        res = await psa_scrape(url)
     elif "taemovies." in url:
-        res = taemovies_scrape(url)
+        res = await taemovies_scrape(url)
     elif "teleguflix." in url:
-        res = teleguflix_scrape(url)
+        res = await teleguflix_scrape(url)
     elif "toonworld4all." in url:
-        res = toonworld4all_scrape(url)
+        res = await toonworld4all_scrape(url)
     elif "sharespark." in url:
-        res = sharespark_scrape(url)
+        res = await sharespark_scrape(url)
     elif "privatemoviez." in url and "/secret?data=" in url:
-        res = privatemoviez(url)
+        res = await privatemoviez(url)
     else:
         res = PyBypass.bypass(url)
     return res

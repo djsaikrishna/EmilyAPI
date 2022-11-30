@@ -10,6 +10,7 @@ flask_restful
 idna
 itsdangerous
 Jinja2
+jikanpy
 lk21
 lxml
 MarkupSafe
@@ -18,6 +19,8 @@ pyparsing
 requests
 requests-toolbelt
 soupsieve
+textblob
 urllib3
 waitress
 Werkzeug
+wikipedia

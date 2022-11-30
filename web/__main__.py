@@ -63,7 +63,7 @@ def json_api():
         return jsonify({"success": False, "msg": "Site Not Supported!"})
     byp_func = BYP_SUP_SITES[byp_type]
     try:
-        result = byp_func(usr_link)
+        result = await byp_func(usr_link)
         LOGGER.info(f"Successfully Bypassed - {byp_type} - {result}")
         return jsonify(
             {"success": True, "url": result, "credits": "Made by Miss Emily", "type": byp_type}
@@ -103,7 +103,7 @@ def json_api_2():
         return jsonify({"success": False, "msg": "Site Not Supported!"})
     dir_func = DIRT_SUP_SITES[dir_type]
     try:
-        result = dir_func(usr_link)
+        result = await dir_func(usr_link)
         LOGGER.info(f"Successfully Generator DL - {dir_type} - {result}")
         return jsonify(
             {"success": True, "url": result, "credits": "Made by Miss Emily", "type": dir_type}
@@ -139,7 +139,7 @@ def json_api_3():
         return jsonify({"success": False, "msg": "Site Not Supported!"})
     misc_func = MISC_SUP_SITES[misc_type]
     try:
-        result = misc_func(usr_query)
+        result = await misc_func(usr_query)
         LOGGER.info(f"Successfully Performed Misc Service - {misc_type} - {result}")
         return jsonify(
             {"success": True, "url": result, "credits": "Made by Miss Emily", "type": misc_type}
@@ -175,7 +175,7 @@ def json_api_multi():
     LOGGER.info(f"Received URL - multi - {usr_link}")
     dir_func = MultiFunction
     try:
-        result = dir_func(usr_link)
+        result = await dir_func(usr_link)
         LOGGER.info(f"Successfully Completed - multi - {result}")
         return jsonify(
             {"success": True, "url": result, "credits": "Made by Miss Emily", "type": "multi"}
@@ -211,7 +211,7 @@ def json_api_4():
         return jsonify({"success": False, "msg": "Site Not Supported!"})
     paste_func = PASTE_SUP_SITES[paste_type]
     try:
-        result = paste_func(usr_text)
+        result = await paste_func(usr_text)
         LOGGER.info(f"Successfully Pasted - {paste_type} - {result}")
         return jsonify(
             {"success": True, "url": result, "credits": "Made by Miss Emily", "type": paste_type}
@@ -251,7 +251,7 @@ def json_api_5():
         return jsonify({"success": False, "msg": "Site Not Supported!"})
     scrap_func = SCRAPE_SUP_SITES[scrap_type]
     try:
-        result = scrap_func(usr_link)
+        result = await scrap_func(usr_link)
         LOGGER.info(f"Successfully Scraped - {scrap_type} - {result}")
         return jsonify(
             {"success": True, "url": result, "credits": "Made by Miss Emily", "type": scrap_type}
@@ -291,7 +291,7 @@ def json_api_6():
         return jsonify({"success": False, "msg": "Site Not Supported!"})
     shrtn_func = SHRT_SUP_SITES[shrtn_type]
     try:
-        result = shrtn_func(usr_link)
+        result = await shrtn_func(usr_link)
         LOGGER.info(f"Successfully Shortened - {shrtn_type} - {result}")
         return jsonify(
             {"success": True, "url": result, "credits": "Made by Miss Emily", "type": shrtn_type}

@@ -20,7 +20,7 @@ from web.scripts.bypass import (adfly, adrinolinks, bifm, droplink, dulink,
                                 rewayatcafe, rocklinks, script_a, script_b,
                                 shareus, short2url, shorte, shortingly,
                                 shortly, sirigan, thinfi, tnlink, try2link,
-                                xpshort)
+                                urlsopen, xpshort)
 from web.scripts.direct import (androiddatahost, anonfiles, antfiles,
                                 artstation, bunkr_cyber, dropbox, fembed,
                                 filesIm, gdbot, github, gofile, hxfile,
@@ -30,15 +30,19 @@ from web.scripts.direct import (androiddatahost, anonfiles, antfiles,
                                 reupload, sbembed, sendcm, sfile, solidfiles,
                                 sourceforge, streamlare, streamsb, streamtape,
                                 uploadbaz, uploadee, uppit, userscloud,
-                                uservideo, wetransfer, yandex_disk, zippyshare)
+                                uservideo, wetransfer, yandex_disk, zippyshare,
+                                vidstream, mycloud, videovard)
 from web.scripts.misc import (dictionary_search, github_search, google_search,
                               image_search, lyrics_search, npm_search,
                               pypi_search, reddit_search, spellcheck,
                               stackoverflow_search, tgsticker_search,
                               tmdb_search, torrent_search, unsplash_search,
                               urban_search, wiki_search, xda_search,
-                              youtube_search)
-from web.scripts.pasting import telegraph_paste
+                              youtube_search, koo_search, animechar_search,
+                              winget_search, omgubuntu_search)
+from web.scripts.pasting import (telegraph_paste, katbin_paste, nekobin_paste,
+                                hastebin_paste, rentry_paste, pastingga_paste,
+                                 pastylus_paste, spacebin_paste)
 from web.scripts.scraper import (animeremux_scrape, atishmkv_scrape,
                                  cinevez_scrape, cinevood_scrape,
                                  filecrypt_scrape, htpmovies_scrape,
@@ -82,6 +86,7 @@ BYP_SUP_SITES = {
     "try2link": try2link,
     "thinfi": thinfi,
     "tnlink": tnlink,
+    "urlsopen": urlsopen,
     "xpshort": xpshort,
 }
 
@@ -106,6 +111,7 @@ DIRT_SUP_SITES = {
     "megaup": megaup,
     "mp4upload": mp4upload,
     "mirrored": mirrored,
+    "mycloud": mycloud,
     "osdn": osdn,
     "pandafile": pandafile,
     "pixeldrain": pixeldrain,
@@ -122,6 +128,8 @@ DIRT_SUP_SITES = {
     "uppit": uppit,
     "userscloud": userscloud,
     "uservideo": uservideo,
+    "videovard": videovard,
+    "vidstream": vidstream,
     "wetransfer": wetransfer,
     "yandex_disk": yandex_disk,
     "zippyshare": zippyshare,
@@ -148,11 +156,21 @@ MISC_SUP_SITES = {
     "torrent_search": torrent_search,
     "tmdb_search": tmdb_search,
     "urban_search": urban_search,
-    "unsplash_search": unsplash_search,
+    "omgubuntu_search": omgubuntu_search,
+    "koo_search": koo_search,
+    "animechar_search": animechar_search,
+    "winget_search": winget_search,
 }
 
 PASTE_SUP_SITES = {
     "telegraph_paste": telegraph_paste,
+    "katbin_paste": katbin_paste,
+    "nekobin_paste": nekobin_paste,
+    "hastebin_paste": hastebin_paste,
+    "rentry_paste": rentry_paste,
+    "pastingga_paste": pastingga_paste,
+    "pastylus_paste": pastylus_paste,
+    "spacebin_paste": spacebin_paste,
 }
 
 SCRAPE_SUP_SITES = {

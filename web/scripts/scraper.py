@@ -15,7 +15,7 @@ next_page = False
 next_page_token = ""
 
 
-def index_scrap(payload, url):
+async def index_scrap(payload, url):
     global next_page
     global next_page_token
     url = url + "/" if url[-1] != "/" else url
@@ -49,22 +49,22 @@ def index_scrap(payload, url):
         return res
 
 
-def index_scrape(url):
+async def index_scrape(url):
     msg = ""
     x = 0
     payload = {"page_token": next_page_token, "page_index": x}
     msg += f"<b><i>Index Link :</i></b> {url}<br>"
     msg += f"<i>Direct Download Links:</i><br>"
-    msg += index_scrap(payload, url)
+    msg += await index_scrap(payload, url)
     while next_page:
         payload = {"page_token": next_page_token, "page_index": x}
-        msg += index_scrap(payload, url)
+        msg += await index_scrap(payload, url)
         x += 1
-    tlg_url = telegraph_paste(msg)
+    tlg_url = await telegraph_paste(msg)
     return tlg_url
 
 
-def try2link_scrape(url):
+async def try2link_scrape(url):
     client = requests.Session()
     h = {
         "upgrade-insecure-requests": "1",
@@ -76,7 +76,7 @@ def try2link_scrape(url):
     return res2
 
 
-def psa_scrape(url):
+async def psa_scrape(url):
     rs_msg = f"<b>User URL :</b> <code>{url}</code><br><br>"
     client = requests.Session()
     url = url + "/" if url[-1] != "/" else url
@@ -87,15 +87,15 @@ def psa_scrape(url):
     for link in soup:
         try:
             exit_gate = link.a.get("href")
-            res = try2link_scrape(exit_gate)
+            res = await try2link_scrape(exit_gate)
             rs_msg += f"<code>{res}</code><br>"
         except BaseException:
             pass
-    tlg_url = telegraph_paste(rs_msg)
+    tlg_url = await telegraph_paste(rs_msg)
     return tlg_url
 
 
-def filecrypt_scrape(url):
+async def filecrypt_scrape(url):
     res_msg = f"<b>User URL :</b> <code>{url}</code><br><br>"
     client = requests.Session()
     h1 = {
@@ -159,11 +159,11 @@ def filecrypt_scrape(url):
         ).json()["success"]["links"]
         for link in response:
             res_msg += f"<code>{link}</code><br>"
-        tlg_url = telegraph_paste(res_msg)
+        tlg_url = await telegraph_paste(res_msg)
         return tlg_url
 
 
-def olamovies_scrape(url):
+async def olamovies_scrape(url):
     url = url + "/" if url[-1] != "/" else url
     dom = url.split("/")[-3]
     res_mesg = f"<b>User URL :</b> <code>{url}</code><br>"
@@ -235,7 +235,7 @@ def olamovies_scrape(url):
             final.append(ele)
     for ee in final:
         res_mesg += f"<code>{ee}</code><br>"
-    tlg_url = telegraph_paste(res_mesg)
+    tlg_url = await telegraph_paste(res_mesg)
     return tlg_url
 
 
@@ -252,7 +252,7 @@ def decodeKey(encoded):
     return key
 
 
-def bypassBluemediafiles(url, torrent=False):
+async def bypassBluemediafiles(url, torrent=False):
     headers = {
         "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:103.0) Gecko/20100101 Firefox/103.0",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
@@ -299,25 +299,27 @@ def bypassBluemediafiles(url, torrent=False):
     return furl
 
 
-def animeremux_scrape(url):
+async def animeremux_scrape(url):
+    no = 0
     rslt = f"User URL : {url}<br><br>"
     rslt += "Links :<br><br>"
     client = requests.session()
-    r = client.get(url).text
-    soup = BeautifulSoup(r, "html.parser")
-    for a in soup.find_all("a"):
-        c = a.get("href")
-        if "appdrive." in c:
-            x = c.split("url=")[-1]
-            t = client.get(x).text
-            soupt = BeautifulSoup(t, "html.parser")
-            title = soupt.title
-            rslt += f"{(title.text).replace('GDToT | ' , '')}<br>{x}<br><br>"
-    tlg_url = telegraph_paste(rslt)
+    r = client.get(url)
+    soup = BeautifulSoup(r.text, "html.parser")
+    links = soup.select('a[href*="urlshortx.com"]')
+    for a in links:
+        link = a["href"]
+        x = link.split("url=")[-1]
+        t = client.get(x)
+        soupt = BeautifulSoup(t.text, "html.parser")
+        title = soupt.title
+        no += 1
+        rslt += f"{no}. {title.text}<br>{x}<br><br>"
+    tlg_url = await telegraph_paste(rslt)
     return tlg_url
 
 
-def igggames_scrape(url):
+async def igggames_scrape(url):
     res_text = f"<b>User URL :</b> <code>{url}</code><br>"
     res_text += f"<i>Links/Magnets Below:</i><br>"
     url = url + "/" if url[-1] != "/" else url
@@ -330,7 +332,7 @@ def igggames_scrape(url):
     bluelist = bluelist[8:-1]
     for ele in bluelist:
         if "bluemediafiles." in ele:
-            temp_res = bypassBluemediafiles(ele, False)
+            temp_res = await bypassBluemediafiles(ele, False)
             res_text += f"{temp_res}<br>"
         elif "pcgamestorrents.com" in ele:
             res2 = requests.get(ele)
@@ -342,16 +344,16 @@ def igggames_scrape(url):
                 .find("a")
                 .get("href")
             )
-            temp_res = bypassBluemediafiles(turl, True)
+            temp_res = await bypassBluemediafiles(turl, True)
             res_text += f"{temp_res}<br>"
         else:
             res_text += f"<code>{ele}</code><br>"
     res_text = res_text[:-1]
-    tlg_url = telegraph_paste(res_text)
+    tlg_url = await telegraph_paste(res_text)
     return tlg_url
 
 
-def magnet_scrape(url):
+async def magnet_scrape(url):
     result = f"<b>User URL :</b> <code>{url}</code><br>"
     result += f"<i>Magnets:</i><br>"
     magns = []
@@ -363,61 +365,61 @@ def magnet_scrape(url):
         magns.append(a["href"])
     for o in magns:
         result += f"• <code>{o}</code><br>"
-    tlg_url = telegraph_paste(result)
+    tlg_url = await telegraph_paste(result)
     return tlg_url
 
 
-def taemovies_scrape(url):
+async def taemovies_scrape(url):
     client = requests.Session()
     rslt = f"User URL : {url}<br><br>"
-    url = url + "/" if url[-1] != "/" else url
-    res = client.get(url, allow_redirects=True)
-    soup = BeautifulSoup(res.content, "html.parser")
     rslt += "Gdrive Links :<br><br>"
-    for a in soup.find_all("a"):
-        c = a.get("href")
-        if c and "shortingly" in c:
-            rslt += f"• {c}<br>"
+    url = url + "/" if url[-1] != "/" else url
+    res = client.get(url, allow_redirects=True)
+    soup = BeautifulSoup(res.text, "html.parser")
+    links = soup.select('a[href*="shortingly"]')
+    for a in links:
+        c = a["href"]
+        rslt += f"• {c}<br>"
     rslt += "<br><br><b><u>NOTE:</u></b><i>The GDrive Links are actually Shortingly AdLinks. Bypass them manually</i>"
-    tlg_url = telegraph_paste(rslt)
+    tlg_url = await telegraph_paste(rslt)
     return tlg_url
 
 
-def teleguflix_scrape(url):
+async def teleguflix_scrape(url):
     client = requests.Session()
     rslt = f"User URL : {url}<br><br>"
+    rslt += "Links :<br><br>"
     url = url + "/" if url[-1] != "/" else url
     res = client.get(url, allow_redirects=True)
     soup = BeautifulSoup(res.content, "html.parser")
-    rslt += "Links :<br><br>"
-    for a in soup.find_all("a"):
-        c = a.get("href")
-        if c and "gdtot" in c:
-            t = client.get(c).text
-            soupt = BeautifulSoup(t, "html.parser")
-            title = soupt.title
-            rslt += f"• <code>{(title.text).replace('GDToT | ' , '')}</code><br>{c}<br>"
-    tlg_url = telegraph_paste(rslt)
+    links = soup.select('a[href*="gdtot"]')
+    for no, link in enumerate(links, start=1):
+        gdlk = link['href']
+        t = client.get(gdlk)
+        soupt = BeautifulSoup(t.text, "html.parser")
+        title = soupt.select('meta[property^="og:description"]')
+        rslt += f"{no}. <code>{(title[0]['content']).replace('Download ', '')}</code><br>{gdlk}<br><br>"
+    tlg_url = await telegraph_paste(rslt)
     return tlg_url
 
 
-def toonworld4all_scrape(url):
+async def toonworld4all_scrape(url):
     client = requests.Session()
     ad_urls = f"<b>User URL :</b> <code>{url}</code><br>"
     ad_urls += f"<i>AdLinks:</i><br>"
     url = url + "/" if url[-1] != "/" else url
     r = client.get(url)
     soup = BeautifulSoup(r.text, "html.parser")
-    for links in soup.find_all("a"):
-        link = links.get("href")
-        if "/redirect/main.php?" in link:
-            res = client.get(link)
-            ad_urls += f"• <code>{res.url}</code><br><br>"
-    tlg_url = telegraph_paste(ad_urls)
+    links = soup.select('a[href*="redirect/main.php?"]')
+    for a in links:
+        down = client.get(a["href"], stream=True, allow_redirects=False)
+        link = down.headers["location"]
+        ad_urls += f"• <code>{link}</code><br><br>"
+    tlg_url = await telegraph_paste(ad_urls)
     return tlg_url
 
 
-def atishmkv_scrape(url):
+async def atishmkv_scrape(url):
     client = requests.Session()
     rslt = f"<b>User URL :</b> <code>{url}</code><br>"
     rslt += f"<i>GDrive Links:</i><br>"
@@ -471,11 +473,11 @@ def atishmkv_scrape(url):
     ):
         i = g.get("href")
         rslt += f"• <code>{i}</code><br>"
-    tlg_url = telegraph_paste(rslt)
+    tlg_url = await telegraph_paste(rslt)
     return tlg_url
 
 
-def moviesdrama_scrape(url):
+async def moviesdrama_scrape(url):
     client = requests.Session()
     rslt = f"<b>User URL :</b> <code>{url}</code><br>"
     rslt += f"<i>Links:</i><br>"
@@ -491,11 +493,11 @@ def moviesdrama_scrape(url):
                 f_url = c["href"]
                 if "moviesdrama." not in f_url:
                     rslt += f"• <code>{f_url}</code><br>"
-    tlg_url = telegraph_paste(rslt)
+    tlg_url = await telegraph_paste(rslt)
     return tlg_url
 
 
-def cinevood_scrape(url):
+async def cinevood_scrape(url):
     t_urls = []
     client = requests.Session()
     rslt = f"<b>User URL :</b> <code>{url}</code><br>"
@@ -515,11 +517,11 @@ def cinevood_scrape(url):
             rslt += f"• {text} <code>{b['href']}</code><br>"
         else:
             rslt += f"• <code>{b['href']}</code><br>"
-    tlg_url = telegraph_paste(rslt)
+    tlg_url = await telegraph_paste(rslt)
     return tlg_url
 
 
-def cinevez_scrape(url):
+async def cinevez_scrape(url):
     client = requests.Session()
     rslt = f"<b>User URL :</b> <code>{url}</code><br><br>"
     url = url + "/" if url[-1] != "/" else url
@@ -538,11 +540,11 @@ def cinevez_scrape(url):
     ):
         for d in c.find_all("a"):
             rslt += f"• <code>{d['href']}</code><br>"
-    tlg_url = telegraph_paste(rslt)
+    tlg_url = await telegraph_paste(rslt)
     return tlg_url
 
 
-def htpmovies_scrape(url):
+async def htpmovies_scrape(url):
     client = requests.Session()
     rslt = f"<b>User URL :</b> <code>{url}</code><br><br>"
     url = url + "/" if url[-1] != "/" else url
@@ -582,11 +584,11 @@ def htpmovies_scrape(url):
         if "telegram.me/htpfilesbot" in d:
             rslt += f"• <code>{d}</code><br>"
     rslt += "<br><br><b><u>NOTE:</u></b><i>The GDrive Links are actually GTLinks AdLinks. Bypass them manually</i>"
-    tlg_url = telegraph_paste(rslt)
+    tlg_url = await telegraph_paste(rslt)
     return tlg_url
 
 
-def sharespark_scrape(url):
+async def sharespark_scrape(url):
     rslt = f"<b>User URL :</b> <code>{url}</code><br><br>"
     client = requests.Session()
     url = "?action=printpage;".join(url.split("?"))
@@ -614,11 +616,11 @@ def sharespark_scrape(url):
                     elif re.match(r"https?://pastetot\.\S+", ns):
                         nxt = re.sub(r"\(|\)|(https?://pastetot\.\S+)", "", next_s)
                         rslt += f"<br><code>{nxt}</code><br>{ns}<br>"
-    tlg_url = telegraph_paste(rslt)
+    tlg_url = await telegraph_paste(rslt)
     return tlg_url
 
 
-def privatemoviez_scrape(url):
+async def privatemoviez_scrape(url):
     client = requests.Session()
     rslt = f"<b>User URL :</b> <code>{url}</code><br>"
     rslt += "<b><u>Links :</u></b><br>"
@@ -660,5 +662,5 @@ def privatemoviez_scrape(url):
         except BaseException:
             continue
     rslt += "<br><br><b><u>NOTE:</u></b><i>The GDrive Links are actually GTLinks AdLinks. Bypass them manually</i>"
-    tlg_url = telegraph_paste(rslt)
+    tlg_url = await telegraph_paste(rslt)
     return tlg_url

@@ -1,5 +1,13 @@
 import re
 
+re_exp = {
+    'VIDSTREAM_RE': r"(?P<scheme>https?://)?(?P<host>(?:\S+.)?(?:vidstreamz|vidstream|vizcloud2)\.(?:online|pro))/(?:embed|e)/(?P<id>[A-Z0-9]+)",
+
+    'MCLOUD_RE': r"(?P<scheme>https?://)?(?P<host>(?:\S+.)?mcloud\.to)/(?:embed|e)/(?P<id>[a-zA-Z0-9]+)",
+
+    'VIDEOVARD_RE': r"(?P<scheme>https?://)?(?P<host>(?:\S+.)?videovard\.(?:sx|to))/[ved]/(?P<id>[a-zA-Z0-9]+)",
+
+}
 
 def is_a_url(url: str):
     url = re.match(
@@ -16,8 +24,8 @@ def is_artstation_link(url: str):
 
 def is_sendcm_folder_link(url: str):
     return (
-        "https://send.cm/s/" in url
-        or "https://send.cm/?sort" in url
-        or "https://send.cm/?sort_field" in url
-        or "https://send.cm/?sort_order" in url
-    )
+        "https://send.cm/s/"
+        or "https://send.cm/?sort"
+        or "https://send.cm/?sort_field"
+        or "https://send.cm/?sort_order"
+    ) in url

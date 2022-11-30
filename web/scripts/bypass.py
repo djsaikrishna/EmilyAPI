@@ -35,7 +35,7 @@ def decrypt_url(code):
     return decrypted.decode("utf-8")
 
 
-def adfly(url):
+async def adfly(url):
     res = requests.get(url).text
     out = {"error": False, "src_url": url}
     ysmm = re.findall("ysmm\s+=\s+['|\"](.*?)['|\"]", res)[0]
@@ -49,7 +49,7 @@ def adfly(url):
     return out["bypassed_url"]
 
 
-def adrinolinks(url):
+async def adrinolinks(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
     dom = "https://adrinolinks.in"
     code = url.split("/")[-1]
@@ -69,7 +69,7 @@ def adrinolinks(url):
     return des_url
 
 
-def ez4short(url):
+async def ez4short(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
     DOMAIN = "https://ez4short.com"
     ref = "https://techmody.io/"
@@ -92,7 +92,7 @@ def encod(__str: str) -> str:
     return bytes_b64.decode("ascii")
 
 
-def bifm(url):
+async def bifm(url):
     url = encod(url)
     client = cloudscraper.create_scraper(allow_brotli=False)
     headers = {
@@ -105,7 +105,7 @@ def bifm(url):
     return query["destination"]
 
 
-def droplink(url):
+async def droplink(url):
     client = requests.Session()
     domain = "https://droplink.co/"
     h = {"referer": "https://yoshare.net"}
@@ -120,7 +120,7 @@ def droplink(url):
     return des_url
 
 
-def dulink(url):
+async def dulink(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
     DOMAIN = "https://cac.teckypress.in/"
     ref = "https://teckypress.in/"
@@ -139,7 +139,7 @@ def dulink(url):
     return des_url
 
 
-def gplinks(url):
+async def gplinks(url):
     client = requests.Session()
     p1 = urllib.parse.urlparse(url)
     final_url = f"{p1.scheme}://{p1.netloc}/links/go"
@@ -161,7 +161,7 @@ def gplinks(url):
     return res3.json()["url"].replace("\/", "/")
 
 
-def gtlinks(url):
+async def gtlinks(url):
     client = requests.Session()
     url = url[:-1] if url[-1] == "/" else url
     if "theforyou.in" in url:
@@ -181,7 +181,7 @@ def gtlinks(url):
     return des_url
 
 
-def gyanilinks(url):
+async def gyanilinks(url):
     client = requests.Session()
     dom = "https://go.kinemaster.cc"
     re = client.get(url)
@@ -200,7 +200,7 @@ def gyanilinks(url):
     return des_url
 
 
-def htpmovies(url):
+async def htpmovies(url):
     client = requests.Session()
     a = client.get(url, allow_redirects=True).text
     b = a.split('("')[-1]
@@ -220,7 +220,7 @@ def htpmovies(url):
     return des_url
 
 
-def hypershort(url):
+async def hypershort(url):
     client = requests.Session()
     response = client.get(url)
     soup = BeautifulSoup(response.content, "html.parser")
@@ -254,7 +254,7 @@ def hypershort(url):
     return des_url
 
 
-def krownlinks(url):
+async def krownlinks(url):
     client = requests.session()
     dom = "https://go.gyanitheme.com"
     url = url[:-1] if url[-1] == "/" else url
@@ -271,7 +271,7 @@ def krownlinks(url):
     return des_url
 
 
-def linkvertise(url):
+async def linkvertise(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36",
@@ -289,7 +289,7 @@ def linkvertise(url):
         return r.json()["destination"]
 
 
-def multi_aio(url):
+async def multi_aio(url):
     data = {
         "url": url,
     }
@@ -317,7 +317,7 @@ def RecaptchaV3(ANCHOR_URL):
     return re.findall(r'"rresp","(.*?)"', res.text)[0]
 
 
-def ouo(url):
+async def ouo(url):
     client = requests.Session()
     tempurl = url.replace("ouo.press", "ouo.io")
     p = urllib.parse.urlparse(tempurl)
@@ -339,7 +339,7 @@ def ouo(url):
     return res.headers.get("Location")
 
 
-def privatemoviez(url):
+async def privatemoviez(url):
     client = requests.Session()
     r = client.get(url)
     soup = BeautifulSoup(r.text, "html.parser")
@@ -362,7 +362,7 @@ def privatemoviez(url):
     return des_url
 
 
-def pkin(url):
+async def pkin(url):
     url = url[:-1] if url[-1] == "/" else url
     domain = "https://go.paisakamalo.in/"
     referer = "https://techkeshri.com/"
@@ -382,7 +382,7 @@ def pkin(url):
     return des_url
 
 
-def rewayatcafe(url):
+async def rewayatcafe(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
     p = urllib.parse.urlparse(url)
     ref = f"{p.scheme}://{p.netloc}/"
@@ -403,7 +403,7 @@ def rewayatcafe(url):
     return des_url
 
 
-def rocklinks(url):
+async def rocklinks(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
     if "rocklinks.net" in url:
         dom = "https://blog.disheye.com"
@@ -461,7 +461,7 @@ def script_b(domain, url):
     return furl
 
 
-def script_a(url):
+async def script_a(url):
     client = requests.Session()
     res = client.get(url)
     soup = BeautifulSoup(res.text, "html.parser")
@@ -500,7 +500,7 @@ def script_a(url):
     return script_b(script_dom, furl)
 
 
-def shareus(url):
+async def shareus(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
     token = url.split("=")[-1]
     des_url = f"https://us-central1-my-apps-server.cloudfunctions.net/r?shortid={token}"
@@ -508,7 +508,7 @@ def shareus(url):
     return dest_url
 
 
-def shorte(url):
+async def shorte(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
     client.headers.update({"referer": url})
     p = urllib.parse.urlparse(url)
@@ -523,7 +523,7 @@ def shorte(url):
     return dest_url
 
 
-def short2url(url):
+async def short2url(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
     DOMAIN = "https://technemo.xyz/blog"
     ref = "https://mytop5.club/"
@@ -547,11 +547,14 @@ def short2url(url):
     return des_url
 
 
-def shortingly(url):
+async def shortingly(url):
     client = requests.Session()
     dom = "https://go.techyjeeshan.xyz"
     url = url[:-1] if url[-1] == "/" else url
     code = url.split("/")[-1]
+    if ("shortingly." and "/full?api=") in url:
+        res = client.get(url, allow_redirects=True).url
+        code = res.split("=")[-1]
     final_url = f"{dom}/{code}"
     resp = client.get(final_url)
     soup = BeautifulSoup(resp.content, "html.parser")
@@ -565,7 +568,7 @@ def shortingly(url):
     return des_url
 
 
-def shortly(url):
+async def shortly(url):
     url = url[:-1] if url[-1] == "/" else url
     token = url.split("/")[-1]
     shortly_bypass_api = "https://www.shortly.xyz/getlink.php/"
@@ -577,7 +580,7 @@ def shortly(url):
     return response
 
 
-def sirigan(url):
+async def sirigan(url):
     client = cloudscraper.create_scraper(allow_brotli=False)
     time.sleep(3)
     res = client.get(url)
@@ -590,7 +593,7 @@ def sirigan(url):
     return url.split("url=")[-1]
 
 
-def try2link(url):
+async def try2link(url):
     client = requests.Session()
     dom = "https://try2link.com"
     ref = "https://newforex.online/"
@@ -612,14 +615,14 @@ def try2link(url):
     return des_url
 
 
-def thinfi(url):
+async def thinfi(url):
     response = requests.get(url)
     des_url = BeautifulSoup(response.content, "html.parser").p.a.get("href")
     des_url = des_url.replace(" ", "%20")
     return des_url
 
 
-def tnlink(url):
+async def tnlink(url):
     url = url[:-1] if url[-1] == "/" else url
     token = url.split("/")[-1]
     client = cloudscraper.create_scraper(allow_brotli=False)
@@ -644,7 +647,25 @@ def tnlink(url):
     return dest_url
 
 
-def xpshort(url):
+async def urlsopen(url):
+    client = requests.session()
+    dom = "https://short.url2go.in/RJOVAq30CU7lINo9AwG4oT3eISn7"
+    url = url[:-1] if url[-1] == "/" else url
+    code = url.split("/")[-1]
+    final_url = f"{dom}/{code}"
+    ref = "https://blog.textpage.xyz/"
+    h = {"referer": ref}
+    resp = client.get(final_url, headers=h)
+    soup = BeautifulSoup(resp.content, "html.parser")
+    inputs = soup.find_all(name="input")
+    data = {input.get("name"): input.get("value") for input in inputs}
+    h = {"x-requested-with": "XMLHttpRequest"}
+    time.sleep(12)
+    des_url = client.post(f"{dom}/links/go", data=data, headers=h).json()["url"]
+    return des_url
+
+
+async def xpshort(url):
     client = requests.Session()
     dom = "https://xpshort.com"
     url = url[:-1] if url[-1] == "/" else url
@@ -657,7 +678,6 @@ def xpshort(url):
     inputs = soup.find_all(name="input")
     data = {input.get("name"): input.get("value") for input in inputs}
     h = {"x-requested-with": "XMLHttpRequest"}
-    time.sleep(8)
+    time.sleep(12)
     des_url = client.post(f"{dom}/links/go", data=data, headers=h).json()["url"]
-    des_url = des_url.replace(" ", "%20")
     return des_url
