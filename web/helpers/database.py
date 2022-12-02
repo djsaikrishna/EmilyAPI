@@ -25,7 +25,12 @@ class DBHelper:
             self.__err = True
 
     def new_dblink(self, url, result):
-        return dict(usr_url=url, result_url=result, url_added_on=datetime.date.today().isoformat(), last_fetched_on=datetime.date.today().isoformat())
+        return dict(
+            usr_url=url,
+            result_url=result,
+            url_added_on=datetime.date.today().isoformat(),
+            last_fetched_on=datetime.date.today().isoformat(),
+        )
 
     async def check_dblink(self, url):
         if self.__err:
@@ -39,7 +44,17 @@ class DBHelper:
         if self.__err:
             return
         dblink = self.new_dblink(url, result)
-        self.__col.update_one({"usr_url": dblink["usr_url"]}, {"$set": {"result_url": dblink["result_url"], "url_added_on": dblink["url_added_on"], "last_fetched_on": dblink["last_fetched_on"]}}, upsert=True)
+        self.__col.update_one(
+            {"usr_url": dblink["usr_url"]},
+            {
+                "$set": {
+                    "result_url": dblink["result_url"],
+                    "url_added_on": dblink["url_added_on"],
+                    "last_fetched_on": dblink["last_fetched_on"],
+                }
+            },
+            upsert=True,
+        )
         self.__client.close()
 
     async def is_dblink_exist(self, url):
@@ -63,7 +78,11 @@ class DBHelper:
     async def update_last_fetched_on(self, url):
         if self.__err:
             return
-        self.__col.update_one({"usr_url": url}, {"$set": {"last_fetched_on": datetime.date.today().isoformat()}}, upsert=True)
+        self.__col.update_one(
+            {"usr_url": url},
+            {"$set": {"last_fetched_on": datetime.date.today().isoformat()}},
+            upsert=True,
+        )
         self.__client.close()
 
     async def get_url_added_on(self, url):
