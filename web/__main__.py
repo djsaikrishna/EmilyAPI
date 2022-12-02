@@ -1,3 +1,4 @@
+import datetime
 import json
 import logging
 import os
@@ -6,8 +7,9 @@ from flask import jsonify, request
 from flask_restful import Resource
 from waitress import serve
 
-from web import (BYP_SUP_SITES, DIRT_SUP_SITES, MISC_SUP_SITES,
+from web import (BYP_SUP_SITES, DATABASE_URL, DIRT_SUP_SITES, MISC_SUP_SITES,
                  PASTE_SUP_SITES, SCRAPE_SUP_SITES, SHRT_SUP_SITES, abc, app)
+from web.helpers.database import DBHelper
 from web.helpers.regex import is_a_url
 from web.scripts.multi import all_in_one as MultiFunction
 
@@ -36,7 +38,7 @@ abc.add_resource(Depriciated, "/api")
 
 
 @app.route("/api/bypass", methods=["GET", "POST"])
-def json_api():
+async def json_api():
     data = request.data.strip()
     if len(data) == 0:
         return jsonify({"success": False, "msg": "No Data Provided"})
@@ -62,11 +64,26 @@ def json_api():
         LOGGER.error("Site Not Supported!")
         return jsonify({"success": False, "msg": "Site Not Supported!"})
     byp_func = BYP_SUP_SITES[byp_type]
+    if DATABASE_URL is not None:
+        if await DBHelper().is_dblink_exist(usr_link):
+            last_used_on = await DBHelper().get_last_fetched_on(usr_link)
+            if last_used_on != datetime.date.today().isoformat():
+                await DBHelper().update_last_fetched_on(usr_link)
+            result = await DBHelper().fetch_dblink_result(usr_link)
+            add_date = await DBHelper().fetch_dblink_added(usr_link)
+            LOGGER.info(f"Successfully Bypassed - DB:True -{byp_type} - {result}")
+            return jsonify(
+                {"success": True, "url": result, "credits": "Made by Miss Emily", "type": byp_type, "from_db": True, "added_on": add_date}
+            )
     try:
         result = await byp_func(usr_link)
-        LOGGER.info(f"Successfully Bypassed - {byp_type} - {result}")
+        LOGGER.info(f"Successfully Bypassed - DB:False - {byp_type} - {result}")
+        if (DATABASE_URL and result) is not None:
+            if not await DBHelper().is_dblink_exist(usr_link):
+                await DBHelper().add_new_dblink(usr_link, result)
+                LOGGER.info(f"Successfully Added - {usr_link} - {result} to DB!")
         return jsonify(
-            {"success": True, "url": result, "credits": "Made by Miss Emily", "type": byp_type}
+            {"success": True, "url": result, "credits": "Made by Miss Emily", "type": byp_type, "from_db": False}
         )
     except Exception as ex:
         LOGGER.error(f"Failed to Perform Action due to : {ex}!")
@@ -76,7 +93,7 @@ def json_api():
 
 
 @app.route("/api/direct", methods=["GET", "POST"])
-def json_api_2():
+async def json_api_2():
     data = request.data.strip()
     if len(data) == 0:
         return jsonify({"success": False, "msg": "No Data Provided"})
@@ -102,11 +119,26 @@ def json_api_2():
         LOGGER.error("Site Not Supported!")
         return jsonify({"success": False, "msg": "Site Not Supported!"})
     dir_func = DIRT_SUP_SITES[dir_type]
+    if DATABASE_URL is not None:
+        if await DBHelper().is_dblink_exist(usr_link):
+            last_used_on = await DBHelper().get_last_fetched_on(usr_link)
+            if last_used_on != datetime.date.today().isoformat():
+                await DBHelper().update_last_fetched_on(usr_link)
+            result = await DBHelper().fetch_dblink_result(usr_link)
+            add_date = await DBHelper().fetch_dblink_added(usr_link)
+            LOGGER.info(f"Successfully Generator DL - DB:True - {dir_type} - {result}")
+            return jsonify(
+                {"success": True, "url": result, "credits": "Made by Miss Emily", "type": dir_type, "from_db": True, "added_on": add_date}
+            )
     try:
         result = await dir_func(usr_link)
-        LOGGER.info(f"Successfully Generator DL - {dir_type} - {result}")
+        LOGGER.info(f"Successfully Generator DL - DB:False - {dir_type} - {result}")
+        if (DATABASE_URL and result) is not None:
+            if not await DBHelper().is_dblink_exist(usr_link):
+                await DBHelper().add_new_dblink(usr_link, result)
+                LOGGER.info(f"Successfully Added - {usr_link} - {result} to DB!")
         return jsonify(
-            {"success": True, "url": result, "credits": "Made by Miss Emily", "type": dir_type}
+            {"success": True, "url": result, "credits": "Made by Miss Emily", "type": dir_type, "from_db": False}
         )
     except Exception as ex:
         LOGGER.error(f"Failed to Perform Action due to : {ex}!")
@@ -116,7 +148,7 @@ def json_api_2():
 
 
 @app.route("/api/misc", methods=["GET", "POST"])
-def json_api_3():
+async def json_api_3():
     data = request.data.strip()
     if len(data) == 0:
         return jsonify({"success": False, "msg": "No Data Provided"})
@@ -152,7 +184,7 @@ def json_api_3():
 
 
 @app.route("/api/multi", methods=["GET", "POST"])
-def json_api_multi():
+async def json_api_multi():
     data = request.data.strip()
     if len(data) == 0:
         return jsonify({"success": False, "msg": "No Data Provided"})
@@ -188,7 +220,7 @@ def json_api_multi():
 
 
 @app.route("/api/paste", methods=["GET", "POST"])
-def json_api_4():
+async def json_api_4():
     data = request.data.strip()
     if len(data) == 0:
         return jsonify({"success": False, "msg": "No Data Provided"})
@@ -224,7 +256,7 @@ def json_api_4():
 
 
 @app.route("/api/scraper", methods=["GET", "POST"])
-def json_api_5():
+async def json_api_5():
     data = request.data.strip()
     if len(data) == 0:
         return jsonify({"success": False, "msg": "No Data Provided"})
@@ -264,7 +296,7 @@ def json_api_5():
 
 
 @app.route("/api/shorten", methods=["GET", "POST"])
-def json_api_6():
+async def json_api_6():
     data = request.data.strip()
     if len(data) == 0:
         return jsonify({"success": False, "msg": "No Data Provided"})

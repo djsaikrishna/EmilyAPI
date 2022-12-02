@@ -10,6 +10,8 @@
 3. Set the SAFONE API URL to use in `SAFONE_API_URL`. It defaults to this [API](https://api.safone.tech/).
 4. Set the Telegraph Name to use in `TELEGRAPH_NAME`. It defaults to this Name - EmilyAPI.
 5. Set the Telegraph URL to use in `TELEGRAPH_LINK`. It defaults to this [link](https://github.com/missemily22).
+6. Set `DATABASE_URL` to a MongoDB URL (Connection string) for storing/obtaining results generated via the /api/bypass and /api/direct endpoints.<br>
+Follow this [guide](https://github.com/missemily22/EmilyAPI/blob/main/README.md#generate-database) to generate database. 
 
 ### Starting the Server
 
@@ -62,6 +64,17 @@ C. Docker Compose
 5. Psa Scraper does not work anymore as of 16/10/2022. Still I kept it since I hope the script will be updated soon.
 6. Both the Scripts `script_a` and `script_b` are added for bypassing for adlinks which share similar working. Examples - 1[https://link.mdisk.website/Pnms055v] & 2[https://xpshort.com/9DNKf].
 7. Only use 'url' key for making requests to multifunction API Endpoint. The server is meant to autodetect desired function.
+
+
+### Generate Database
+
+1. Go to `https://mongodb.com/` and sign-up.
+2. Create Shared Cluster.
+3. Press on `Database` under `Deployment` Header, your created cluster will be there.
+5. Press on connect, choose `Allow Access From Anywhere` and press on `Add IP Address` - Put '0.0.0.0', then create user.
+6. After creating user press on `Choose a connection`, then press on `Connect your application`. Choose `Driver` **python** and `version` **3.6 or later**.
+7. Copy your `connection string` and replace `<password>` with the password of your user, then press close.
+
 
 ## Available Link Bypassers
 

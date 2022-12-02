@@ -1,5 +1,6 @@
 import logging
 
+from os import environ
 from flask import Flask
 from flask_restful import Api
 
@@ -11,6 +12,12 @@ logging.basicConfig(
 LOGGER = logging.getLogger(__name__)
 logging.getLogger("flask").setLevel(logging.WARNING)
 logging.getLogger("flask_restful").setLevel(logging.WARNING)
+
+
+DATABASE_URL = environ.get("DATABASE_URL", "")
+if len(DATABASE_URL) == 0:
+    LOGGER.warning("DataBase URL not provided!")
+    DATABASE_URL = None
 
 
 from web.scripts.bypass import (adfly, adrinolinks, bifm, droplink, dulink,

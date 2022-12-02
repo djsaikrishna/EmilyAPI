@@ -5,7 +5,7 @@ certifi
 charset-normalizer
 click
 cloudscraper
-flask
+flask[async]
 flask_restful
 idna
 itsdangerous
@@ -15,6 +15,7 @@ lk21
 lxml
 MarkupSafe
 PyBypass
+pymongo
 pyparsing
 requests
 requests-toolbelt
