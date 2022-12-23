@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup, NavigableString, Tag
 
 from web import LOGGER
 from web.helpers.lists import drive_list
-from web.scripts.bypass import htpmovies, privatemoviez, rocklinks, try2link, ez4short
+from web.scripts.bypass import ez4short, htpmovies, privatemoviez, rocklinks, try2link
 from web.scripts.pasting import telegraph_paste
 
 next_page = False
@@ -93,10 +93,10 @@ async def atishmkv_scrape(url):
     r = client.get(url)
     soup = BeautifulSoup(r.text, "html.parser")
     for a in soup.find_all(
-            "a",
-            {
-                "class": "mb-button mb-style-traditional mb-size-small mb-corners-straight mb-text-style-heavy"
-            },
+        "a",
+        {
+            "class": "mb-button mb-style-traditional mb-size-small mb-corners-straight mb-text-style-heavy"
+        },
     ):
         c = a.get("href")
         rslt += f"• <code>{c}</code><br>"
@@ -104,38 +104,38 @@ async def atishmkv_scrape(url):
         d = b.get("href")
         rslt += f"• <code>{d}</code><br>"
     for c in soup.find_all(
-            "a",
-            {
-                "class": "mb-button mb-style-traditional mb-size-default mb-corners-default mb-text-style-heavy"
-            },
+        "a",
+        {
+            "class": "mb-button mb-style-traditional mb-size-default mb-corners-default mb-text-style-heavy"
+        },
     ):
         e = c.get("href")
         rslt += f"• <code>{e}</code><br>"
     for d in soup.find_all(
-            "a",
-            {
-                "class": "mb-button mb-style-reversed mb-size-default mb-corners-pill mb-text-style-heavy wpel-icon-right"
-            },
+        "a",
+        {
+            "class": "mb-button mb-style-reversed mb-size-default mb-corners-pill mb-text-style-heavy wpel-icon-right"
+        },
     ):
         f = d.get("href")
         rslt += f"• <code>{f}</code><br>"
     for e in soup.find_all(
-            "a",
-            {
-                "class": "mb-button mb-style-reversed mb-size-default mb-corners-pill mb-text-style-heavy"
-            },
+        "a",
+        {
+            "class": "mb-button mb-style-reversed mb-size-default mb-corners-pill mb-text-style-heavy"
+        },
     ):
         g = e.get("href")
         rslt += f"• <code>{g}</code><br>"
     for f in soup.find_all(
-            "a",
-            {"class": "button button-shadow wpel-icon-right"},
+        "a",
+        {"class": "button button-shadow wpel-icon-right"},
     ):
         h = f.get("href")
         rslt += f"• <code>{h}</code><br>"
     for g in soup.find_all(
-            "a",
-            {"class": "wpel-icon-right"},
+        "a",
+        {"class": "wpel-icon-right"},
     ):
         i = g.get("href")
         rslt += f"• <code>{i}</code><br>"
@@ -166,14 +166,14 @@ async def cinevez_scrape(url):
     soup = BeautifulSoup(p.text, "html.parser")
     rslt += "<b><u>Magnet Torrents :</u></b><br>"
     for a in soup.find_all(
-            "div", {"class": "box-content p-3 flex justify-center items-center flex-wrap"}
+        "div", {"class": "box-content p-3 flex justify-center items-center flex-wrap"}
     ):
         for b in a.find_all("a"):
             rslt += f"• {b['href']}<br><br>"
     rslt += "<br><b><u>Direct Links :</u></b><br>"
     for c in soup.find_all(
-            "div",
-            {"class": "p-2 rounded flex items-center justify-between item-link text-dark"},
+        "div",
+        {"class": "p-2 rounded flex items-center justify-between item-link text-dark"},
     ):
         for d in c.find_all("a"):
             rslt += f"• <code>{d['href']}</code><br>"
@@ -235,9 +235,9 @@ async def filecrypt_scrape(url):
         line = ele.get("onclick")
         if line is not None and "DownloadDLC" in line:
             dlclink = (
-                    "https://filecrypt.co/DLC/"
-                    + line.split("DownloadDLC('")[1].split("'")[0]
-                    + ".html"
+                "https://filecrypt.co/DLC/"
+                + line.split("DownloadDLC('")[1].split("'")[0]
+                + ".html"
             )
             break
     if dlclink == "":
@@ -514,10 +514,10 @@ async def privatemoviez_scrape(url):
     r = client.get(url)
     soup = BeautifulSoup(r.text, "html.parser")
     for a in soup.find_all(
-            "a",
-            {
-                "class": "wp-block-button__link has-blush-bordeaux-gradient-background has-background"
-            },
+        "a",
+        {
+            "class": "wp-block-button__link has-blush-bordeaux-gradient-background has-background"
+        },
     ):
         try:
             d = a.get("href")
@@ -526,10 +526,10 @@ async def privatemoviez_scrape(url):
         except BaseException:
             continue
     for b in soup.find_all(
-            "a",
-            {
-                "class": "wp-block-button__link has-midnight-gradient-background has-background"
-            },
+        "a",
+        {
+            "class": "wp-block-button__link has-midnight-gradient-background has-background"
+        },
     ):
         try:
             e = b.get("href")
@@ -538,8 +538,8 @@ async def privatemoviez_scrape(url):
         except BaseException:
             continue
     for c in soup.find_all(
-            "a",
-            {"class": "wp-block-button__link has-background"},
+        "a",
+        {"class": "wp-block-button__link has-background"},
     ):
         try:
             f = c.get("href")

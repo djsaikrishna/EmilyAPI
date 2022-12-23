@@ -672,9 +672,7 @@ async def tnlink(url):
         "x-requested-with": "XMLHttpRequest",
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36",
     }
-    dest_url = client.post(
-        f"{dom}/links/go", data=data, headers=h2
-    ).json()["url"]
+    dest_url = client.post(f"{dom}/links/go", data=data, headers=h2).json()["url"]
     dest_url = dest_url.replace(" ", "%20")
     return dest_url
 
