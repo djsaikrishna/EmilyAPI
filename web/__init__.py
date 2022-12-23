@@ -27,7 +27,8 @@ from web.scripts.bypass import (adfly, adrinolinks, bifm, droplink, dulink,
                                 rewayatcafe, rocklinks, script_a, script_b,
                                 shareus, short2url, shorte, shortingly,
                                 shortly, sirigan, thinfi, tnlink, try2link,
-                                urlsopen, xpshort)
+                                urlsopen, xpshort, linkbnao, mdiskpro,
+                                vearnl)
 from web.scripts.direct import (androiddatahost, anonfiles, antfiles,
                                 artstation, bunkr_cyber, dropbox, fembed,
                                 filesIm, gdbot, github, gofile, hxfile,
@@ -57,7 +58,10 @@ from web.scripts.scraper import (animeremux_scrape, atishmkv_scrape,
                                  moviesdrama_scrape, olamovies_scrape,
                                  privatemoviez_scrape, psa_scrape,
                                  sharespark_scrape, taemovies_scrape,
-                                 teleguflix_scrape, toonworld4all_scrape)
+                                 teleguflix_scrape, toonworld4all_scrape,
+                                 benzmovies_scrape, moviesboss_scrape,
+                                 moviesmod_scrape, skymovieshd_scrape,
+                                 tamiltvtoons_scrape, mkvguru_scrape)
 from web.scripts.shorten import (bitly_shorten, clckru_shorten, clilp_shorten,
                                  dagd_shorten, isgd_shorten, osdb_shorten,
                                  tinyurl_shorten, ttm_shorten, vgd_shorten)
@@ -75,7 +79,9 @@ BYP_SUP_SITES = {
     "htpmovies": htpmovies,
     "hypershort": hypershort,
     "krownlinks": krownlinks,
+    "linkbnao": linkbnao,
     "linkvertise": linkvertise,
+    "mdiskpro": mdiskpro,
     "multi_aio": multi_aio,
     "ouo": ouo,
     "privatemoviez": privatemoviez,
@@ -94,6 +100,7 @@ BYP_SUP_SITES = {
     "thinfi": thinfi,
     "tnlink": tnlink,
     "urlsopen": urlsopen,
+    "vearnl": vearnl,
     "xpshort": xpshort,
 }
 
@@ -198,6 +205,12 @@ SCRAPE_SUP_SITES = {
     "htpmovies_scrap": htpmovies_scrape,
     "sharespark_scrap": sharespark_scrape,
     "privatemoviez_scrap": privatemoviez_scrape,
+    "benzmovies_scrap": benzmovies_scrape,
+    "moviesboss_scrap": moviesboss_scrape,
+    "moviesmod_scrap": moviesmod_scrape,
+    "skymovieshd_scrap": skymovieshd_scrape,
+    "tamiltvtoons_scrap": tamiltvtoons_scrape,
+    "mkvguru_scrap": mkvguru_scrape,
 }
 
 SHRT_SUP_SITES = {

@@ -192,3 +192,10 @@ adfly_list = [
     "barsoocm.com",
     "chuxoast.com",
 ]
+drive_list = [
+    "drivelinks.in",
+    "driveroot.in",
+    "drivesharer.in",
+    "driveace.in",
+    "drivehub.in",
+]

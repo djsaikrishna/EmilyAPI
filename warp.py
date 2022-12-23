@@ -53,7 +53,7 @@ def run():
 
 g = 0
 b = 0
-limit = 100
+limit = 250
 
 while True:
     result = run()
@@ -61,7 +61,7 @@ while True:
         g += 1
         if g > limit:
             LOGGER.info(f"[#] Total: {g} Good {b} Bad")
-            limit += 100
+            limit += 250
         time.sleep(8)
     else:
         b += 1

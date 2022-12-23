@@ -10,7 +10,7 @@ from waitress import serve
 from web import (BYP_SUP_SITES, DATABASE_URL, DIRT_SUP_SITES, MISC_SUP_SITES,
                  PASTE_SUP_SITES, SCRAPE_SUP_SITES, SHRT_SUP_SITES, abc, app)
 from web.helpers.database import DBHelper
-from web.helpers.regex import is_a_url
+from web.helpers.regex import is_a_url, url_exists
 from web.scripts.multi import all_in_one as MultiFunction
 
 logging.basicConfig(
@@ -59,6 +59,9 @@ async def json_api():
     if valid_url is not True:
         LOGGER.error("API could not detect URL Input!")
         return jsonify({"success": False, "msg": "API could not detect URL Input!"})
+    if not url_exists(usr_link):
+        LOGGER.error("API could not connect to the URL!")
+        return jsonify({"success": False, "msg": "API could not connect to the URL!"})
     LOGGER.info(f"Received URL - {byp_type} - {usr_link}")
     if byp_type not in BYP_SUP_SITES.keys():
         LOGGER.error("Site Not Supported!")
@@ -114,6 +117,9 @@ async def json_api_2():
     if valid_url is not True:
         LOGGER.error("API could not detect URL Input!")
         return jsonify({"success": False, "msg": "API could not detect URL Input!"})
+    if not url_exists(usr_link):
+        LOGGER.error("API could not connect to the URL!")
+        return jsonify({"success": False, "msg": "API could not connect to the URL!"})
     LOGGER.info(f"Received URL - {dir_type} - {usr_link}")
     if dir_type not in DIRT_SUP_SITES.keys():
         LOGGER.error("Site Not Supported!")
@@ -165,7 +171,7 @@ async def json_api_3():
         return jsonify({"success": False, "msg": "Parameters Incorrect!"})
     misc_type = data["type"]
     usr_query = data["query"]
-    LOGGER.info(f"Received URL - {misc_type} - {usr_query}")
+    LOGGER.info(f"Received Query - {misc_type} - {usr_query}")
     if misc_type not in MISC_SUP_SITES.keys():
         LOGGER.error("Site Not Supported!")
         return jsonify({"success": False, "msg": "Site Not Supported!"})
@@ -204,6 +210,9 @@ async def json_api_multi():
     if valid_url is not True:
         LOGGER.error("API could not detect URL Input!")
         return jsonify({"success": False, "msg": "API could not detect URL Input!"})
+    if not url_exists(usr_link):
+        LOGGER.error("API could not connect to the URL!")
+        return jsonify({"success": False, "msg": "API could not connect to the URL!"})
     LOGGER.info(f"Received URL - multi - {usr_link}")
     dir_func = MultiFunction
     try:
@@ -237,7 +246,7 @@ async def json_api_4():
         return jsonify({"success": False, "msg": "Parameters Incorrect!"})
     paste_type = data["type"]
     usr_text = data["text"]
-    LOGGER.info(f"Received URL - {paste_type} - {usr_text}")
+    LOGGER.info(f"Received Text - {paste_type} - {usr_text}")
     if paste_type not in PASTE_SUP_SITES.keys():
         LOGGER.error("Site Not Supported!")
         return jsonify({"success": False, "msg": "Site Not Supported!"})
@@ -277,6 +286,9 @@ async def json_api_5():
     if valid_url is not True:
         LOGGER.error("API could not detect URL Input!")
         return jsonify({"success": False, "msg": "API could not detect URL Input!"})
+    if not url_exists(usr_link):
+        LOGGER.error("API could not connect to the URL!")
+        return jsonify({"success": False, "msg": "API could not connect to the URL!"})
     LOGGER.info(f"Received URL - {scrap_type} - {usr_link}")
     if scrap_type not in SCRAPE_SUP_SITES.keys():
         LOGGER.error("Site Not Supported!")
@@ -313,11 +325,7 @@ async def json_api_6():
         return jsonify({"success": False, "msg": "Parameters Incorrect!"})
     shrtn_type = data["type"]
     usr_link = data["url"]
-    valid_url = is_a_url(usr_link)
-    if valid_url is not True:
-        LOGGER.error("API could not detect URL Input!")
-        return jsonify({"success": False, "msg": "API could not detect URL Input!"})
-    LOGGER.info(f"Received URL - {shrtn_type} - {usr_link}")
+    LOGGER.info(f"Received Shorten - {shrtn_type} - {usr_link}")
     if shrtn_type not in SHRT_SUP_SITES.keys():
         LOGGER.error("Site Not Supported!")
         return jsonify({"success": False, "msg": "Site Not Supported!"})

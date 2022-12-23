@@ -10,8 +10,9 @@
 3. Set the SAFONE API URL to use in `SAFONE_API_URL`. It defaults to this [API](https://api.safone.tech/).
 4. Set the Telegraph Name to use in `TELEGRAPH_NAME`. It defaults to this Name - EmilyAPI.
 5. Set the Telegraph URL to use in `TELEGRAPH_LINK`. It defaults to this [link](https://github.com/missemily22).
-6. Set `DATABASE_URL` to a MongoDB URL (Connection string) for storing/obtaining results generated via the /api/bypass and /api/direct endpoints.<br>
-Follow this [guide](https://github.com/missemily22/EmilyAPI/blob/main/README.md#generate-database) to generate database. 
+6. (Optional) Set `DATABASE_URL` to a MongoDB URL (Connection string) for storing/obtaining results generated via the /api/bypass and /api/direct endpoints.<br>
+Follow this [guide](/README.md#generate-database) to generate database. 
+7. (Optional) Set `WARP_ID` to your Cloudflare Warp ID if you want to generate some extra Warp+ Quota
 
 ### Starting the Server
 
@@ -62,9 +63,9 @@ C. Docker Compose
 3. The default Telegraph URL that this API uses is gra.ph (And not telegra.ph !)
 4. Results for Bunkr, CybderDrop, Pixl & SendCM as well FileCrypt, Bhadoo Index & Psa.pm Scraper will be in Telegraph URLs.
 5. Psa Scraper does not work anymore as of 16/10/2022. Still I kept it since I hope the script will be updated soon.
-6. Both the Scripts `script_a` and `script_b` are added for bypassing for adlinks which share similar working. Examples - 1[https://link.mdisk.website/Pnms055v] & 2[https://xpshort.com/9DNKf].
+6. Both the Scripts `script_a` and `script_b` are added for bypassing for adlinks which share similar working. Examples - [1](https://link.mdisk.website/Pnms055v) & [2](https://xpshort.com/9DNKf).
 7. Only use 'url' key for making requests to multifunction API Endpoint. The server is meant to autodetect desired function.
-
+8. The warp script at [warp.py](/warp.py) is just there for fun. If you want then you can add your own Warp ID there or leave it for mine :p
 
 ### Generate Database
 
@@ -112,7 +113,10 @@ C. Docker Compose
 | 28.   | Dulink          | `dulink`      |
 | 29.   | Ez4Short        | `ez4short`    |
 | 30.   | Try2Link        | `try2link`    |
-| 30.   | URLsOpen        | `urlsopen`    |
+| 31.   | URLsOpen        | `urlsopen`    |
+| 32.   | LinkBnao        | `linkbnao`    |
+| 33.   | MdiskPro        | `mdiskpro`    |
+| 34.   | Vearnl          | `vearnl`      |
 
 ## Available Direct-Link Generators
 
@@ -250,7 +254,13 @@ C. Docker Compose
 | 14.   | TaeMovies Site Scraper | `taemovies_scrap`    |
 | 15.   | TeleguFlix Scraper     | `teleguflix_scrap`   |
 | 16.   | Toonworld4all Scraper  | `toonworld4all_scrap`|
-| 16.   | AnimeRemux Scraper     | `animeremux_scrap`   |
+| 17.   | AnimeRemux Scraper     | `animeremux_scrap`   |
+| 18.   | BenzMovies Scraper     | `benzmovies_scrape`  |
+| 19.   | MoviesBoss Scraper     | `moviesboss_scrape`  |
+| 20.   | MoviesMod Scraper      | `moviesmod_scrape`   |
+| 21.   | SkyMoviesHD Scraper    | `skymovieshd_scrape` |
+| 22.   | TamilTVToons Scraper   | `tamiltvtoons_scrape`|
+| 23.   | MKVGuru Scraper        | `mkvguru_scrape`     |
 
 
 ## Sample Requests
@@ -276,11 +286,13 @@ else:
 ---
 
 
-## Credits
+# Credits
 
+* Thanks to [Akshett Rai Jindal](https://github.com/akshettrj) for writing the Base Code and Structure of Flask API
 * Thanks to [Yukki](https://github.com/xcscxr) for Bypassing Scripts
 * Thanks to [Sanjit](https://github.com/sanjit-sinha) for Rocklinks Bypass and Index Scraper
 * Thanks to [zevtyardt](https://github.com/zevtyardt/lk21) for LK21 Bypasser
 * Thanks to [Disha Patel](https://github.com/dishapatel010) for ArtStation, MDisk and WeTransfer Direct link Gen
 * Thanks to [Bipin Krishna](https://github.com/bipinkrish) for OlaMovies, IGG Games and FileCrypt Site Scrapers
+* Thanks to [Jack](https://github.com/JohnWickKeanue) for various Bypasses and Scrapers
 * Thanks to [Emily](https://github.com/missemily22) for writing the Code and few bypassers

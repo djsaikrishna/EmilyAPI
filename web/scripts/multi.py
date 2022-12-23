@@ -63,9 +63,15 @@ async def all_in_one(url):
         res = await shortly(url)
     elif "thinfi." in url:
         res = await thinfi(url)
+    elif "linkbnao." in url:
+        res = await linkbnao(url)
+    elif "mdisk.pro" in url:
+        res = await mdiskpro(url)
+    elif ("vearnl." or "urlearn.") in url:
+        res = await vearnl(url)
     elif is_artstation:
         res = await artstation(url)
-    elif "mdisk." in url:
+    elif "mdisk.me" in url:
         res = await mdisk(url)
     elif "wetransfer." in url or "we.tl" in url:
         res = await wetransfer(url)
@@ -73,7 +79,7 @@ async def all_in_one(url):
         res = await gdbot(url)
     elif "gofile." in url:
         # res = await gofile(url)
-        res = await url  # Temporary Solution
+        res = url  # Temporary Solution
     elif "megaup." in url:
         res = await megaup(url)
     elif "mcloud." in url:
@@ -191,6 +197,18 @@ async def all_in_one(url):
         res = await sharespark_scrape(url)
     elif "privatemoviez." in url and "/secret?data=" in url:
         res = await privatemoviez(url)
+    elif "benzmovies." in url:
+        res = await benzmovies_scrape(url)
+    elif "moviesboss." in url:
+        res = await moviesboss_scrape(url)
+    elif "moviesmod." in url:
+        res = await moviesmod_scrape(url)
+    elif "skymovieshd." in url:
+        res = await skymovieshd_scrape(url)
+    elif "tamiltvtoons." in url:
+        res = await tamiltvtoons_scrape(url)
+    elif "mkvguru." in url:
+        res = await mkvguru_scrape(url)
     else:
         res = PyBypass.bypass(url)
     return res
